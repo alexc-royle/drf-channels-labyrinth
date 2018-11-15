@@ -1,26 +1,24 @@
-# Create django project
-sudo docker-compose run web django-admin.py startproject learning_site .
+# Labyrinth App using django, drf, channels and react
+This project builds upon previous work done in django and react, bringing them both together. This project uses docker-compose to run everything
 
-# start the project
-docker-compose up
+## Getting started
+### Prerequisites
+### Installing
+## Running Tests
+### End to end Tests
+### Coding style Tests
+## Deployment
+## Built with
+## Authors
+## Acknowledgements
 
-# close the project
-docker-compose down
-
-# run migrate
-docker-compose run web python3 manage.py migrate
-
-# create an app
-docker-compose run web python3 manage.py startapp courses
-
-# change file/folder ownership to current user in current directory
-sudo chown -R  $USER:$USER .
-
-# run makemigrations after changes to models etc. Need to run migrate after this
-docker-compose run web python3 manage.py makemigrations <name_of_app>
-
-# run django shell
-docker-compose run web python3 manage.py shell
-
-# create superuser for/admin
-docker-compose run web python3 manage.py createsuperuser
+## Helpful instructions
+* Creating a django project `sudo docker-compose run web django-admin.py startproject <project_name> .`
+* Creating an app `docker-compose run web python3 manage.py startapp <app_name>`
+* Start the project `docker-compose up`
+* Close the project `docker-compose down`
+* Create migrations `docker-compose run web python3 manage.py makemigrations <app_name>`
+* Migrate any changes `docker-compose run web python3 manage.py migrate`
+* Change file/folder ownership `sudo chown -R  $USER:$USER .`
+* Run django shell `docker-compose run web python3 manage.py shell`
+* Create superuser for admin `docker-compose run web python3 manage.py createsuperuser`
