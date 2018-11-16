@@ -57,7 +57,7 @@ class AccountsTest(APITestCase):
         Ensure user is not created with a ridiculously long username
         """
         data = {
-            'username': 'foo'*10,
+            'username': 'foo'*11,
             'email': 'foobarbaz@example.com',
             'password': 'foobar'
         }
