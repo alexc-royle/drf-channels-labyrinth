@@ -93,3 +93,45 @@ class AccountsTest(APITestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(len(response.data['username']), 1)
+
+    def test_create_user_with_preexisting_email(self):
+        """
+        Ensure user is not created if a user with the same email already exists
+        """
+        data = {
+            'username': 'test_user2',
+            'email': 'test@example.com',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['email']), 1)
+
+    def test_create_user_with_invalid_email(self):
+        """
+        Ensure user is not created with an invalid email
+        """
+        data = data = {
+            'username': 'foobar',
+            'email': 'testing',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['email']), 1)
+
+    def test_create_user_with_no_email(self):
+        """
+        Ensure user is not created without an email
+        """
+        data = data = {
+            'username': 'foobar',
+            'email': '',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['email']), 1)
