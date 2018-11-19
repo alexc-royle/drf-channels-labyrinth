@@ -141,3 +141,75 @@ class AccountsTest(APITestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(len(response.data['email']), 1)
+
+
+    def test_authenticate_user(self):
+        """
+        Ensure we can authenticate a user and get a valid token in return.
+        """
+        data = {
+            'username': 'test_user',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.authenticate_url, data, format='json')
+        user = User.objects.get(username=data['username'])
+        token = Token.objects.get(user=user)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['user_id'], user.id)
+        self.assertEqual(response.data['username'], data['username'])
+        self.assertEqual(response.data['email'], user.email)
+        self.assertFalse('password' in response.data)
+        self.assertEqual(response.data['token'], token.key)
+
+    def test_authenticate_user_with_no_username(self):
+        """
+        Ensure we cannot authenticate a user if we are given a blank username
+        """
+        data = {
+            'username': '',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.authenticate_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['username']), 1)
+
+    def test_authenticate_user_with_no_password(self):
+        """
+        Ensure we cannot authenticate a user if we are given a blank password
+        """
+        data = {
+            'username': 'test_user',
+            'password': ''
+        }
+        response = self.client.post(self.authenticate_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['password']), 1)
+
+    def test_authenticate_user_with_incorrect_username(self):
+        """
+        Ensure we cannot authenticate a user if we are given an incorrect username
+        """
+        data = {
+            'username': 'test_user_2',
+            'password': 'testpassword'
+        }
+        response = self.client.post(self.authenticate_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['non_field_errors']), 1)
+
+    def test_authenticate_user_with_incorrect_password(self):
+        """
+        Ensure we cannot authenticate a user if we are given an incorrect username
+        """
+        data = {
+            'username': 'test_user',
+            'password': 'testpassword_2'
+        }
+        response = self.client.post(self.authenticate_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(response.data['non_field_errors']), 1)
