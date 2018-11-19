@@ -8,6 +8,7 @@ class AccountsTest(APITestCase):
     def setUp(self):
         self.test_user = User.objects.create_user('test_user', 'test@example.com', 'testpassword')
         self.create_url = reverse('account-create')
+        self.authenticate_url = reverse('account-gettoken')
 
     def test_create_user(self):
         """
