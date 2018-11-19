@@ -23,16 +23,17 @@ class UserCreate(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserGetAuthToken(ObtainAuthToken): #username and password fields need to be posted
-
+class UserGetAuthToken(ObtainAuthToken):
+    permission_classes = (permissions.AllowAny,)
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,  context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token = Token.objects.get(user=user)
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'username': user.username,
-            'email': user.email
-        })
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'username': user.username,
+                'email': user.email
+            })
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
