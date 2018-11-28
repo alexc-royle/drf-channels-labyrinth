@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '../containers/PrivateRoute';
 import PublicRoute from '../containers/PublicRoute';
 import Login from '../containers/Login';
+import Logout from '../containers/Logout';
 class App extends Component {
   render() {
     return (
@@ -10,6 +11,7 @@ class App extends Component {
         <div className="App">
           <Switch>
             <PrivateRoute path="/" exact component={Home} />
+            <PrivateRoute path="/logout" exact component={Logout} />
             <PublicRoute path="/login/" component={Login} />
             <PublicRoute path="/register/" component={Register} />
             <Route component={NoPathMatch} />

@@ -6,6 +6,8 @@ const loggedIn = (state = false, action) => {
       return true;
     case "LOGGED_OUT":
       return false;
+    case "LOADED_DATA_FROM_LOCAL_STORAGE":
+      return action.data.loggedIn;
     default:
       return state;
   }
@@ -17,6 +19,8 @@ const id = (state='', action) => {
       return action.data.user_id;
     case "LOGGED_OUT":
       return '';
+    case "LOADED_DATA_FROM_LOCAL_STORAGE":
+      return action.data.id;
     default:
       return state;
   }
@@ -28,6 +32,8 @@ const token = (state='', action) => {
       return action.data.token;
     case "LOGGED_OUT":
       return '';
+    case "LOADED_DATA_FROM_LOCAL_STORAGE":
+      return action.data.token;
     default:
       return state;
   }
@@ -39,6 +45,8 @@ const username = (state='', action) => {
       return action.data.username;
     case "LOGGED_OUT":
       return '';
+    case "LOADED_DATA_FROM_LOCAL_STORAGE":
+      return action.data.username;
     default:
       return state;
   }
@@ -50,6 +58,8 @@ const email = (state='', action) => {
       return action.data.email;
     case "LOGGED_OUT":
       return '';
+    case "LOADED_DATA_FROM_LOCAL_STORAGE":
+      return action.data.email;
     default:
       return state;
   }

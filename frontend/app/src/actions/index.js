@@ -26,6 +26,10 @@ export const loginUser = (event) => (dispatch, getState) => {
         dispatch({
           type: 'LOGIN_RESPONSE_SUCCESS_RECEIVED',
           data
+        });
+        dispatch({
+          type: 'SAVE_DATA_TO_LOCAL_STORAGE',
+          data: getState().user
         })
       }
     });
@@ -43,4 +47,12 @@ export const loginPasswordChanged = (event) => {
     type: 'LOGIN_PASSWORD_UPDATED',
     password: event.target.value
   }
+}
+
+export const logoutUser = () => (dispatch, getState) => {
+  dispatch({ type: 'LOGGED_OUT' });
+  dispatch({
+    type: 'SAVE_DATA_TO_LOCAL_STORAGE',
+    data: getState().user
+  });
 }
