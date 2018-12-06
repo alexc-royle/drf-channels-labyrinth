@@ -1,4 +1,3 @@
-import fetchData from '../api';
 import { helpers } from '../reducers';
 
 export const loginUser = (event) => (dispatch, getState) => {
@@ -8,29 +7,29 @@ export const loginUser = (event) => (dispatch, getState) => {
     dispatch({
       type: 'LOGIN_REQUEST_SUBMITTED'
     });
-
-    const userToken = helpers.getUserToken(state);
-
-    const body = {
-      username: helpers.getGivenUsername(state),
-      password: helpers.getGivenPassword(state)
-    }
-
-    fetchData('http://localhost:8080/api/v1/user/authenticate', body, userToken, (error, data) => {
-      if (error) {
-        dispatch({
-          type: 'LOGIN_RESPONSE_ERROR_RECEIVED',
-          error
-        })
-      } else {
-        dispatch({
-          type: 'LOGIN_RESPONSE_SUCCESS_RECEIVED',
-          data
-        });
-        dispatch({
-          type: 'SAVE_DATA_TO_LOCAL_STORAGE',
-          data: getState().user
-        })
+    dispatch({
+      type: 'API_REQUEST',
+      body: {
+        username: helpers.getGivenUsername(state),
+        password: helpers.getGivenPassword(state)
+      },
+      url: 'user/authenticate',
+      callback: (error, data) => {
+        if (error) {
+          dispatch({
+            type: 'LOGIN_RESPONSE_ERROR_RECEIVED',
+            error
+          })
+        } else {
+          dispatch({
+            type: 'LOGIN_RESPONSE_SUCCESS_RECEIVED',
+            data
+          });
+          dispatch({
+            type: 'SAVE_DATA_TO_LOCAL_STORAGE',
+            data: getState().user
+          })
+        }
       }
     });
   }
