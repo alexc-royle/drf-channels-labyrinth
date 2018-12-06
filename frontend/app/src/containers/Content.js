@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Login from './Login';
+import Register from './Register';
 import Logout from './Logout';
 
 class Content extends Component {
@@ -23,7 +24,6 @@ class Content extends Component {
   }
 }
 const Home = () => <h2>Home</h2>;
-const Register = () => <h2>Register</h2>;
 const NoPathMatch = () => <h2>No Match</h2>;
 
 

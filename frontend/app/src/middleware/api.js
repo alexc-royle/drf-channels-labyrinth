@@ -2,17 +2,16 @@ import 'whatwg-fetch';
 import { helpers } from '../reducers';
 
 export const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
-  }
-}
-
-export const parseJSON = (response) => {
-  return response.json();
+  return response.json().then((data) => {
+    if (response.status >= 200 && response.status < 300) {
+      return data;
+    } else {
+      const error = new Error(response.statusText);
+      error.response = response;
+      error.data = data;
+      throw error;
+    }
+  })
 }
 
 export const setupHeaders = (state) => {
@@ -38,9 +37,9 @@ const APIMiddleware = store => next => action => {
     case 'API_REQUEST':
       const { url = '', callback = () => {} } = action;
       const requestBody = setupRequest(action, store.getState());
+      console.log(requestBody);
       fetch(`http://localhost:8080/api/v1/${url}`, requestBody)
         .then(checkStatus)
-        .then(parseJSON)
         .then((data) => {
           console.log('request succeeded with JSON response', data);
           callback(false, data);

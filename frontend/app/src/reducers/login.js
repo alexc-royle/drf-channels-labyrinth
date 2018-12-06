@@ -55,7 +55,7 @@ const login = combineReducers({
 });
 export default login;
 
-export const getGivenUsername = (state) => state.username;
-export const getGivenPassword = (state) => state.password;
-export const getIsLoginError = (state) => state.error;
-export const getIsAwaitingLoginResponse = (state) => state.awaitingResponse;
+export const getUsername = (state) => state.username;
+export const getPassword = (state) => state.password;
+export const getIsError = (state) => state.error;
+export const getIsAwaitingResponse = (state) => state.awaitingResponse;
