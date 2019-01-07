@@ -32,21 +32,21 @@ export const setupRequest = (action, state) => {
   }
 }
 
-const APIMiddleware = store => next => action => {
+const APIMiddleware = ({ dispatch, getState }) => next => action => {
   switch(action.type) {
     case 'API_REQUEST':
-      const { url = '', callback = () => {} } = action;
-      const requestBody = setupRequest(action, store.getState());
-      console.log(requestBody);
+      const { url = '', types } = action;
+      const [pendingType, successType, errorType] = types;
+      const requestBody = setupRequest(action, getState());
+      dispatch({ type: pendingType });
       fetch(`http://localhost:8080/api/v1/${url}`, requestBody)
         .then(checkStatus)
         .then((data) => {
           console.log('request succeeded with JSON response', data);
-          callback(false, data);
+          dispatch({ type: successType, payload: data});
         }).catch((error) => {
-          store.dispatch({ type: 'API_RESPONSE_ERROR', error });
-          console.log('request failed with error', error);
-          callback(error);
+          dispatch({ type: 'API_RESPONSE_ERROR', payload: error });
+          dispatch({ type: errorType, payload: error });
         })
         break;
     default:

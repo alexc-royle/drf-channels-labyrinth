@@ -7,9 +7,10 @@ import * as actions from '../actions';
 
 class Header extends Component {
   render() {
-    if(this.props.isUserAuthenticated) {
+    const { isUserAuthenticated, logoutUser } = this.props;
+    if(isUserAuthenticated) {
       return (
-        <div className="header"><LoggedInHeader /></div>
+        <div className="header"><LoggedInHeader logoutClicked={logoutUser}/></div>
       );
     }
     return (

@@ -10,11 +10,9 @@ const configureStore = () => {
   if(process.env.NODE_ENV !== 'production') {
     middlewares.push(logger);
   }
-  const store = createStore(
+  return createStore(
     app,
     applyMiddleware(...middlewares)
   );
-  store.dispatch({ type: '@@INIT_STORE'});
-  return store;
 }
 export default configureStore;

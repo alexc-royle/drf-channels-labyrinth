@@ -1,6 +1,6 @@
-export const loadState = () => {
+export const loadState = (id) => {
   try {
-    const serializedState = localStorage.getItem('state');
+    const serializedState = localStorage.getItem(id);
     if (serializedState === null) {
       return undefined;
     }
@@ -10,29 +10,39 @@ export const loadState = () => {
   }
 }
 
-export const saveState = (state) => {
+export const saveState = (id, state) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
+    localStorage.setItem(id, serializedState);
   } catch(err) {
     // ignore for now.
   }
 }
 
-const localStorageMiddleware = store => next => action => {
+const localStorageMiddleware = ({ dispatch, getState }) => next => action => {
   switch(action.type) {
-    case '@@INIT_STORE':
-      const state = loadState();
-      if(state !== undefined) {
-        store.dispatch({ type: 'LOADED_DATA_FROM_LOCAL_STORAGE', data: state });
+    case 'LOCAL_STORAGE_REQUEST':
+      const { method, id, data, onSuccess, onAttempt } = action;
+      dispatch({ type: onAttempt });
+      switch(method) {
+        case 'get':
+          const loadedState = loadState(id);
+          if(loadedState !== undefined) {
+            dispatch({ type: onSuccess, payload: loadedState });
+          }
+          break;
+        case 'set':
+          saveState(id, data);
+          dispatch({ type: onSuccess });
+          break;
+        default:
+          break;
       }
-      break;
-    case 'SAVE_DATA_TO_LOCAL_STORAGE':
-      saveState(action.data);
       break;
     default:
       break;
   }
   return next(action);
 }
+
 export default localStorageMiddleware;

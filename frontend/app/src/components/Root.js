@@ -1,10 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import App from './App';
+import LocalStorage from '../containers/LocalStorage';
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <App/>
+    <LocalStorage/>
   </Provider>
 );
 export default Root;

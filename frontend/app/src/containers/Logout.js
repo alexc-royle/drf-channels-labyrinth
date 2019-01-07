@@ -5,9 +5,9 @@ import * as actions from '../actions';
 
 class Logout extends React.Component {
   render() {
-		const { logoutUser } = this.props;
+	  const { logoutUser } = this.props;
     logoutUser();
-		return (<Redirect to='/login' />);
+	  return (<Redirect to='/login' />);
 	}
 };
 

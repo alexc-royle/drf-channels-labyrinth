@@ -4,7 +4,6 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Login from './Login';
 import Register from './Register';
-import Logout from './Logout';
 
 class Content extends Component {
   render() {
@@ -13,7 +12,6 @@ class Content extends Component {
         <Router>
             <Switch>
               <PrivateRoute path="/" exact component={Home} />
-              <PrivateRoute path="/logout" exact component={Logout} />
               <PublicRoute path="/login/" component={Login} />
               <PublicRoute path="/register/" component={Register} />
               <Route component={NoPathMatch} />

@@ -6,8 +6,8 @@ const loggedIn = (state = false, action) => {
       return true;
     case "LOGGED_OUT":
       return false;
-    case "LOADED_DATA_FROM_LOCAL_STORAGE":
-      return action.data.loggedIn;
+    case "LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED":
+      return action.payload.loggedIn;
     default:
       return state;
   }
@@ -16,11 +16,11 @@ const loggedIn = (state = false, action) => {
 const id = (state='', action) => {
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
-      return action.data.user_id;
+      return action.payload.user_id;
     case "LOGGED_OUT":
       return '';
-    case "LOADED_DATA_FROM_LOCAL_STORAGE":
-      return action.data.id;
+    case "LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED":
+      return action.payload.id;
     default:
       return state;
   }
@@ -29,11 +29,11 @@ const id = (state='', action) => {
 const token = (state='', action) => {
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
-      return action.data.token;
+      return action.payload.token;
     case "LOGGED_OUT":
       return '';
-    case "LOADED_DATA_FROM_LOCAL_STORAGE":
-      return action.data.token;
+    case "LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED":
+      return action.payload.token;
     default:
       return state;
   }
@@ -42,11 +42,11 @@ const token = (state='', action) => {
 const username = (state='', action) => {
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
-      return action.data.username;
+      return action.payload.username;
     case "LOGGED_OUT":
       return '';
-    case "LOADED_DATA_FROM_LOCAL_STORAGE":
-      return action.data.username;
+    case "LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED":
+      return action.payload.username;
     default:
       return state;
   }
@@ -55,11 +55,11 @@ const username = (state='', action) => {
 const email = (state='', action) => {
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
-      return action.data.email;
+      return action.payload.email;
     case "LOGGED_OUT":
       return '';
-    case "LOADED_DATA_FROM_LOCAL_STORAGE":
-      return action.data.email;
+    case "LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED":
+      return action.payload.email;
     default:
       return state;
   }

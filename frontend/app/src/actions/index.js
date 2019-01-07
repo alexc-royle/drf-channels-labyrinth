@@ -5,34 +5,37 @@ export const loginUser = (event) => (dispatch, getState) => {
   const alreadySubmitted = helpers.getIsAwaitingLoginResponse(state);
   if(!alreadySubmitted) {
     dispatch({
-      type: 'LOGIN_REQUEST_SUBMITTED'
-    });
-    dispatch({
       type: 'API_REQUEST',
       body: {
         username: helpers.getLoginUsername(state),
         password: helpers.getLoginPassword(state)
       },
       url: 'user/authenticate',
-      callback: (error, data) => {
-        if (error) {
-          dispatch({
-            type: 'LOGIN_RESPONSE_ERROR_RECEIVED',
-            error
-          })
-        } else {
-          dispatch({
-            type: 'LOGIN_RESPONSE_SUCCESS_RECEIVED',
-            data
-          });
-          dispatch({
-            type: 'SAVE_DATA_TO_LOCAL_STORAGE',
-            data: getState().user
-          })
-        }
-      }
+      types: ['LOGIN_REQUEST_SUBMITTED', 'LOGIN_RESPONSE_SUCCESS_RECEIVED', 'LOGIN_RESPONSE_ERROR_RECEIVED']
     });
   }
+}
+
+export const loadUserDataFromLocalStorage = () => {
+  return {
+    type: 'LOCAL_STORAGE_REQUEST',
+    method: 'get',
+    id: 'user',
+    data: undefined,
+    onSuccess: 'LOCAL_STORAGE_USER_DATA_LOAD_RESPONSE_SUCCESS_RECEIVED',
+    onAttempt: 'LOCAL_STORAGE_USER_DATA_LOAD_ATTEMPTED'
+  }
+}
+
+export const saveUserDataToLocalStorage = () => (dispatch, getState) => {
+  dispatch({
+    type: 'LOCAL_STORAGE_REQUEST',
+    method: 'set',
+    id: 'user',
+    data: getState().user,
+    onSuccess: 'LOCAL_STORAGE_USER_DATA_SAVE_RESPONSE_SUCCESS_RECEIVED',
+    onAttempt: 'LOCAL_STORAGE_USER_DATA_SAVE_ATTEMPTED'
+  });
 }
 
 export const loginUsernameChanged = (event) => {
@@ -48,12 +51,10 @@ export const loginPasswordChanged = (event) => {
   }
 }
 
-export const logoutUser = () => (dispatch, getState) => {
-  dispatch({ type: 'LOGGED_OUT' });
-  dispatch({
-    type: 'SAVE_DATA_TO_LOCAL_STORAGE',
-    data: getState().user
-  });
+export const logoutUser = () => {
+  return {
+    type: 'LOGGED_OUT'
+  };
 }
 
 export const registerUser = (event) => (dispatch, getState) => {
