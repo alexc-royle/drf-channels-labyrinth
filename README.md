@@ -1,6 +1,52 @@
 # Labyrinth App using django, drf, channels and react
 This project builds upon previous work done in django and react, bringing them both together. This project uses docker-compose to run everything
 
+## API
+* game:
+** get - list all games
+** post - create a game
+** put - n/a
+** delete - n/a
+* game/pk:
+** get - get game details
+** put - edit game details
+** delete - delete a game
+** create - n/a
+* game/pk/pieces
+** get - list game pieces per game
+** post - n/a
+** push - n/a
+** delete - n/a
+* game/pk/collectables
+** get - list collectables per game
+** post - n/a
+** push - n/a
+** delete - n/a
+* game/pk/players
+** get - list players in game
+** post - add a player to a game
+** delete - n/a
+** push - n/a
+* game/pk/playercounters
+** get - get all player counters
+** post - n/a
+** put - n/a
+** delete - n/a
+* game/pk/rotatesparesquare
+** post - rotate the spare square, returns the updated spare square
+** get - n/a
+** put - n/a
+** delete - n/a
+* game/pk/insertsparesquare
+** post - inserts the spare square. returns the updated pieces
+** get - n/a
+** put - n/a
+** delete - n/a
+* game/pk/movecounter
+** post - moves the counter of the current player. returns all the playercounters
+** get - n/a
+** put - n/a
+** delete - n/a
 ## Getting started
 ### Prerequisites
 ### Installing

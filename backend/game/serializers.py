@@ -37,9 +37,19 @@ class GamePieceSerializer(serializers.ModelSerializer):
         model = models.GamePiece
 
 class GameSerializer(serializers.ModelSerializer):
-    pieces = GamePieceSerializer(many=True, read_only=True)
     class Meta:
         fields = (
-            'id', 'creator', 'pieces'
+            'id', 'creator'
         )
         model = models.Game
+        
+    def create(self, validated_data):
+        creator = self.context['request'].user
+        return models.Game.objects.create(creator=creator, **validated_data)
+
+class UserCounterSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id', 'game', 'user', 'game_piece', 'collectable_items'
+        )
+        model = models.UserCounter

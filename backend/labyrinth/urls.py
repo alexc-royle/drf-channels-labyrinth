@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework import routers
+
+from game import views
+
+router = routers.SimpleRouter()
+router.register(r'game', views.GameViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/user/', include("accounts.urls"), name="api_v1_user"),
-    path('api/v1/game/', include("game.urls"), name="api_v1_game")
+    path('api/v1/', include(router.urls), name="api_v1_game")
 ]

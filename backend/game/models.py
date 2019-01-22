@@ -52,7 +52,9 @@ class Game(models.Model):
     creator = models.ForeignKey(
         User,
         on_delete = models.CASCADE,
+        null=True
     )
+
 @receiver(post_save, sender=Game)
 def create_game_pieces(sender, instance=None, created=False, **kwargs):
     if created:
@@ -63,6 +65,11 @@ def create_game_pieces(sender, instance=None, created=False, **kwargs):
         collectable_items = CollectableItem.objects.all()
         collectable_items_count = len(collectable_items)
         available_image_order = sample(list(range(collectable_items_count)), 24)
+
+        for base_game_piece in base_game_pieces:
+            if base_game_piece.order:
+                available_piece_order.remove(base_game_piece.order)
+
         for base_game_piece in base_game_pieces:
             if not base_game_piece.shape.title in orientations_by_shape.keys():
                 orientations_by_shape[base_game_piece.shape.title] = GamePieceOrientation.objects.filter(shape=base_game_piece.shape)
@@ -77,14 +84,24 @@ def create_game_pieces(sender, instance=None, created=False, **kwargs):
                     current_game_piece.collectable_item = collectable_items[available_image_order.pop(0)]
                 if base_game_piece.order:
                     current_game_piece.order = base_game_piece.order
-                    available_piece_order.remove(base_game_piece.order)
-                else:
-                    order = available_piece_order.pop(0)
-                    if order < 50:
-                        current_game_piece.order = order
                 game_pieces.append(current_game_piece)
-        GamePiece.objects.bulk_create(game_pieces)
 
+        random_ordered_game_pieces = sample(game_pieces, len(game_pieces))
+        for game_piece in random_ordered_game_pieces:
+            if not game_piece.order:
+                order = available_piece_order.pop(0)
+                if order < 50:
+                    game_piece.order = order
+
+        GamePiece.objects.bulk_create(random_ordered_game_pieces)
+
+@receiver(post_save, sender=Game)
+def create_user_counter(sender, instance=None, created=False, **kwargs):
+    if created:
+        user_counter = UserCounter()
+        user_counter.game = instance
+        user_counter.user = instance.creator
+        user_counter.save()
 
 class GamePiece(models.Model):
     game = models.ForeignKey(
@@ -114,7 +131,8 @@ class UserCounter(models.Model):
     )
     game_piece = models.ForeignKey(
         'GamePiece',
-        on_delete = models.CASCADE
+        on_delete = models.CASCADE,
+        null=True
     )
     collectable_items = models.ManyToManyField(
         'CollectableItem',
