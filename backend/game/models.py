@@ -21,8 +21,20 @@ class GamePieceOrientation(models.Model):
     left = models.BooleanField(default=False)
     right = models.BooleanField(default=False)
 
+
     def __str__(self):
         return '{0.shape} orientation {0.order}'.format(self)
+    def __getitem__(self, key):
+        if key == 'up':
+            return self.up
+        elif key == 'down':
+            return self.down
+        elif key == 'left':
+            return self.left
+        elif key == 'right':
+            return self.right
+        else:
+            return undefined
 
 class CollectableItem(models.Model):
     title = models.CharField(max_length=255)
@@ -48,11 +60,123 @@ class BaseGamePiece(models.Model):
     order = models.IntegerField(null=True)
     number_of_items = models.IntegerField(default = 1)
 
+
+class Player(models.Model):
+    game = models.ForeignKey(
+        'Game',
+        on_delete = models.CASCADE,
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE,
+    )
+    game_piece = models.ForeignKey(
+        'GamePiece',
+        on_delete = models.CASCADE,
+        null=True,
+        related_name = 'currentcounters'
+    )
+    starting_game_piece = models.ForeignKey(
+        'GamePiece',
+        on_delete = models.CASCADE,
+        null=True,
+        related_name = 'startcounters'
+    )
+    completed = models.BooleanField(
+        default = False
+    )
+
+    order = models.IntegerField(null=True)
+    TOPLEFT = 1
+    TOPRIGHT = 7
+    BOTTOMLEFT = 43
+    BOTTOMRIGHT = 49
+    STARTING_POSITION_LIST = [
+        TOPLEFT,
+        TOPRIGHT,
+        BOTTOMLEFT,
+        BOTTOMRIGHT
+    ]
+    STARTING_POSITION_CHOICES = (
+        (TOPLEFT, 'top_left'),
+        (TOPRIGHT, 'top_right'),
+        (BOTTOMLEFT, 'bottom_left'),
+        (BOTTOMRIGHT, 'bottom_right')
+    )
+    starting_position = models.IntegerField(
+        choices = STARTING_POSITION_CHOICES,
+        null = True
+    )
+
+    def remaining_item_count(self):
+        return CollectableItem.objects.filter(
+            playercollectableitem__player_id = self.id,
+            playercollectableitem__collected = False
+        ).count()
+
+    def on_starting_square(self):
+        return self.game_piece == self.starting_game_piece
+
+
+
+class PlayerCollectableItem(models.Model):
+    player = models.ForeignKey(
+        'Player',
+        on_delete = models.CASCADE
+    )
+    collectable_item = models.ForeignKey(
+        'CollectableItem',
+        on_delete = models.CASCADE,
+    )
+    order = models.IntegerField()
+    collected = models.BooleanField(default=False)
+
+class GamePiece(models.Model):
+    game = models.ForeignKey(
+        'Game',
+        related_name = 'pieces',
+        on_delete = models.CASCADE,
+    )
+    orientation = models.ForeignKey(
+        'GamePieceOrientation',
+        on_delete = models.CASCADE,
+    )
+    collectable_item = models.ForeignKey(
+        'CollectableItem',
+        on_delete = models.CASCADE,
+        null=True
+    )
+    order = models.IntegerField(null=True)
+
 class Game(models.Model):
     creator = models.ForeignKey(
         User,
         on_delete = models.CASCADE,
         null=True
+    )
+    current_player = models.ForeignKey(
+        'Player',
+        on_delete = models.CASCADE,
+        null = True,
+        related_name = 'currentplayer'
+    )
+    winner = models.ForeignKey(
+        'Player',
+        on_delete = models.CASCADE,
+        null = True,
+        related_name = 'winningplayer'
+    )
+    LOBBY = 1
+    INPROGRESS = 2
+    COMPLETED = 3
+    GAME_STATUS_CHOICES = (
+        (LOBBY, 'lobby'),
+        (INPROGRESS, 'in_progress'),
+        (COMPLETED, 'completed')
+    )
+    status = models.IntegerField(
+        choices = GAME_STATUS_CHOICES,
+        default = LOBBY
     )
 
 @receiver(post_save, sender=Game)
@@ -98,42 +222,7 @@ def create_game_pieces(sender, instance=None, created=False, **kwargs):
 @receiver(post_save, sender=Game)
 def create_user_counter(sender, instance=None, created=False, **kwargs):
     if created:
-        user_counter = UserCounter()
+        user_counter = Player()
         user_counter.game = instance
         user_counter.user = instance.creator
         user_counter.save()
-
-class GamePiece(models.Model):
-    game = models.ForeignKey(
-        'Game',
-        related_name = 'pieces',
-        on_delete = models.CASCADE,
-    )
-    orientation = models.ForeignKey(
-        'GamePieceOrientation',
-        on_delete = models.CASCADE,
-    )
-    collectable_item = models.ForeignKey(
-        'CollectableItem',
-        on_delete = models.CASCADE,
-        null=True
-    )
-    order = models.IntegerField(null=True)
-
-class UserCounter(models.Model):
-    game = models.ForeignKey(
-        'Game',
-        on_delete = models.CASCADE,
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete = models.CASCADE,
-    )
-    game_piece = models.ForeignKey(
-        'GamePiece',
-        on_delete = models.CASCADE,
-        null=True
-    )
-    collectable_items = models.ManyToManyField(
-        'CollectableItem',
-    )
