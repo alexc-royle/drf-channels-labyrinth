@@ -82,8 +82,8 @@ class Player(models.Model):
         null=True,
         related_name = 'startcounters'
     )
-    completed = models.BooleanField(
-        default = False
+    completed_time = models.DateTimeField(
+        null=True
     )
 
     order = models.IntegerField(null=True)
