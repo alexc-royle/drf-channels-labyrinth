@@ -1,652 +1,585 @@
-[
-  {
-    "model": "game.GamePieceShape",
+[{
+    "model": "game.gamepieceshape",
     "pk": 1,
     "fields": {
-      "title": "bend"
+        "title": "bend"
     }
-  },
-  {
-    "model": "game.GamePieceShape",
+}, {
+    "model": "game.gamepieceshape",
     "pk": 2,
     "fields": {
-      "title": "tjunction"
+        "title": "tjunction"
     }
-  },
-  {
-    "model": "game.GamePieceShape",
+}, {
+    "model": "game.gamepieceshape",
     "pk": 3,
     "fields": {
-      "title": "straight"
+        "title": "straight"
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 1,
     "fields": {
-      "shape": 1,
-      "order": 1,
-      "up": false,
-      "down": true,
-      "left": false,
-      "right": true
+        "shape": 1,
+        "order": 1,
+        "up": false,
+        "down": true,
+        "left": false,
+        "right": true
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 2,
     "fields": {
-      "shape": 1,
-      "order": 2,
-      "up": false,
-      "down": true,
-      "left": true,
-      "right": false
+        "shape": 1,
+        "order": 2,
+        "up": false,
+        "down": true,
+        "left": true,
+        "right": false
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 3,
     "fields": {
-      "shape": 1,
-      "order": 3,
-      "up": true,
-      "down": false,
-      "left": false,
-      "right": true
+        "shape": 1,
+        "order": 3,
+        "up": true,
+        "down": false,
+        "left": false,
+        "right": true
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 4,
     "fields": {
-      "shape": 1,
-      "order": 4,
-      "up": true,
-      "down": false,
-      "left": true,
-      "right": false
+        "shape": 1,
+        "order": 4,
+        "up": true,
+        "down": false,
+        "left": true,
+        "right": false
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 5,
     "fields": {
-      "shape": 2,
-      "order": 1,
-      "up": false,
-      "down": true,
-      "left": true,
-      "right": true
+        "shape": 2,
+        "order": 1,
+        "up": false,
+        "down": true,
+        "left": true,
+        "right": true
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 6,
     "fields": {
-      "shape": 2,
-      "order": 2,
-      "up": true,
-      "down": false,
-      "left": true,
-      "right": true
+        "shape": 2,
+        "order": 2,
+        "up": true,
+        "down": false,
+        "left": true,
+        "right": true
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 7,
     "fields": {
-      "shape": 2,
-      "order": 3,
-      "up": true,
-      "down": true,
-      "left": false,
-      "right": true
+        "shape": 2,
+        "order": 3,
+        "up": true,
+        "down": true,
+        "left": false,
+        "right": true
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 8,
     "fields": {
-      "shape": 2,
-      "order": 4,
-      "up": true,
-      "down": true,
-      "left": true,
-      "right": false
+        "shape": 2,
+        "order": 4,
+        "up": true,
+        "down": true,
+        "left": true,
+        "right": false
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 9,
     "fields": {
-      "shape": 3,
-      "order": 1,
-      "up": true,
-      "down": true,
-      "left": false,
-      "right": false
+        "shape": 3,
+        "order": 1,
+        "up": true,
+        "down": true,
+        "left": false,
+        "right": false
     }
-  },
-  {
-    "model": "game.GamePieceOrientation",
+}, {
+    "model": "game.gamepieceorientation",
     "pk": 10,
     "fields": {
-      "shape": 3,
-      "order": 2,
-      "up": false,
-      "down": false,
-      "left": true,
-      "right": true
+        "shape": 3,
+        "order": 2,
+        "up": false,
+        "down": false,
+        "left": true,
+        "right": true
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 1,
     "fields": {
-      "title": "Alligator",
-      "description": "Alligator",
-      "class_name": "alligator"
+        "title": "Alligator",
+        "description": "Alligator",
+        "class_name": "alligator"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 2,
     "fields": {
-      "title": "Ant",
-      "description": "Ant",
-      "class_name": "ant"
+        "title": "Ant",
+        "description": "Ant",
+        "class_name": "ant"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 3,
     "fields": {
-      "title": "Bat",
-      "description": "Bat",
-      "class_name": "bat"
+        "title": "Bat",
+        "description": "Bat",
+        "class_name": "bat"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 4,
     "fields": {
-      "title": "Bear",
-      "description": "Bear",
-      "class_name": "bear"
+        "title": "Bear",
+        "description": "Bear",
+        "class_name": "bear"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 5,
     "fields": {
-      "title": "Bug",
-      "description": "Bug",
-      "class_name": "bug"
+        "title": "Bug",
+        "description": "Bug",
+        "class_name": "bug"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 6,
     "fields": {
-      "title": "Bull",
-      "description": "Bull",
-      "class_name": "bull"
+        "title": "Bull",
+        "description": "Bull",
+        "class_name": "bull"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 7,
     "fields": {
-      "title": "Coins",
-      "description": "Coins",
-      "class_name": "coins"
+        "title": "Coins",
+        "description": "Coins",
+        "class_name": "coins"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 8,
     "fields": {
-      "title": "Ring",
-      "description": "Ring",
-      "class_name": "ring"
+        "title": "Ring",
+        "description": "Ring",
+        "class_name": "ring"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 9,
     "fields": {
-      "title": "Diamond",
-      "description": "Diamond",
-      "class_name": "diamond"
+        "title": "Diamond",
+        "description": "Diamond",
+        "class_name": "diamond"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 10,
     "fields": {
-      "title": "Dinosaur",
-      "description": "Dinosaur",
-      "class_name": "dinosaur"
+        "title": "Dinosaur",
+        "description": "Dinosaur",
+        "class_name": "dinosaur"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 11,
     "fields": {
-      "title": "Emerald",
-      "description": "Emerald",
-      "class_name": "emerald"
+        "title": "Emerald",
+        "description": "Emerald",
+        "class_name": "emerald"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 12,
     "fields": {
-      "title": "Crown",
-      "description": "Crown",
-      "class_name": "crown"
+        "title": "Crown",
+        "description": "Crown",
+        "class_name": "crown"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 13,
     "fields": {
-      "title": "Falcon",
-      "description": "Falcon",
-      "class_name": "falcon"
+        "title": "Falcon",
+        "description": "Falcon",
+        "class_name": "falcon"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 14,
     "fields": {
-      "title": "Genie",
-      "description": "Genie",
-      "class_name": "genie"
+        "title": "Genie",
+        "description": "Genie",
+        "class_name": "genie"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 15,
     "fields": {
-      "title": "Ghost",
-      "description": "Ghost",
-      "class_name": "ghost"
+        "title": "Ghost",
+        "description": "Ghost",
+        "class_name": "ghost"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 16,
     "fields": {
-      "title": "Leprechaun",
-      "description": "Leprechaun",
-      "class_name": "leprechaun"
+        "title": "Leprechaun",
+        "description": "Leprechaun",
+        "class_name": "leprechaun"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 17,
     "fields": {
-      "title": "Money bag",
-      "description": "Money bag",
-      "class_name": "money-bag"
+        "title": "Money bag",
+        "description": "Money bag",
+        "class_name": "money-bag"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 18,
     "fields": {
-      "title": "Ruby",
-      "description": "Ruby",
-      "class_name": "ruby"
+        "title": "Ruby",
+        "description": "Ruby",
+        "class_name": "ruby"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 19,
     "fields": {
-      "title": "Skull",
-      "description": "Skull",
-      "class_name": "skull"
+        "title": "Skull",
+        "description": "Skull",
+        "class_name": "skull"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 20,
     "fields": {
-      "title": "Helmet",
-      "description": "Helmet",
-      "class_name": "helmet"
+        "title": "Helmet",
+        "description": "Helmet",
+        "class_name": "helmet"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 21,
     "fields": {
-      "title": "Spider",
-      "description": "Spider",
-      "class_name": "spider"
+        "title": "Spider",
+        "description": "Spider",
+        "class_name": "spider"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 22,
     "fields": {
-      "title": "Sword",
-      "description": "Sword",
-      "class_name": "sword"
+        "title": "Sword",
+        "description": "Sword",
+        "class_name": "sword"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 23,
     "fields": {
-      "title": "Dragon",
-      "description": "Dragon",
-      "class_name": "dragon"
+        "title": "Dragon",
+        "description": "Dragon",
+        "class_name": "dragon"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 24,
     "fields": {
-      "title": "Topaz",
-      "description": "Topaz",
-      "class_name": "topaz"
+        "title": "Topaz",
+        "description": "Topaz",
+        "class_name": "topaz"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 25,
     "fields": {
-      "title": "Chest",
-      "description": "Chest",
-      "class_name": "chest"
+        "title": "Chest",
+        "description": "Chest",
+        "class_name": "chest"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 26,
     "fields": {
-      "title": "Map",
-      "description": "Map",
-      "class_name": "map"
+        "title": "Map",
+        "description": "Map",
+        "class_name": "map"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 27,
     "fields": {
-      "title": "Unicorn",
-      "description": "Unicorn",
-      "class_name": "unicorn"
+        "title": "Unicorn",
+        "description": "Unicorn",
+        "class_name": "unicorn"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 28,
     "fields": {
-      "title": "Wasp",
-      "description": "Wasp",
-      "class_name": "wasp"
+        "title": "Wasp",
+        "description": "Wasp",
+        "class_name": "wasp"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 29,
     "fields": {
-      "title": "Witch",
-      "description": "Witch",
-      "class_name": "witch"
+        "title": "Witch",
+        "description": "Witch",
+        "class_name": "witch"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 30,
     "fields": {
-      "title": "Wolf",
-      "description": "Wolf",
-      "class_name": "wolf"
+        "title": "Wolf",
+        "description": "Wolf",
+        "class_name": "wolf"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 31,
     "fields": {
-      "title": "Rat",
-      "description": "Rat",
-      "class_name": "rat"
+        "title": "Rat",
+        "description": "Rat",
+        "class_name": "rat"
     }
-  },
-  {
-    "model": "game.CollectableItem",
+}, {
+    "model": "game.collectableitem",
     "pk": 32,
     "fields": {
-      "title": "Snake",
-      "description": "Snake",
-      "class_name": "snake"
+        "title": "Snake",
+        "description": "Snake",
+        "class_name": "snake"
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 1,
     "fields": {
-      "orientation": 1,
-      "shape": 1,
-      "has_image": false,
-      "order": 1,
-      "number_of_items": 1
+        "orientation": 1,
+        "shape": 1,
+        "has_image": false,
+        "order": 1,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 2,
     "fields": {
-      "title": "",
-      "orientation": 5,
-      "shape": 2,
-      "has_image": true,
-      "order": 3,
-      "number_of_items": 1
+        "orientation": 5,
+        "shape": 2,
+        "has_image": true,
+        "order": 3,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 3,
     "fields": {
-      "orientation": 5,
-      "shape": 2,
-      "has_image": true,
-      "order": 5,
-      "number_of_items": 1
+        "orientation": 5,
+        "shape": 2,
+        "has_image": true,
+        "order": 5,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 4,
     "fields": {
-      "orientation": 2,
-      "shape": 1,
-      "has_image": false,
-      "order": 7,
-      "number_of_items": 1
+        "orientation": 2,
+        "shape": 1,
+        "has_image": false,
+        "order": 7,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 5,
     "fields": {
-      "orientation": 7,
-      "shape": 2,
-      "has_image": true,
-      "order": 15,
-      "number_of_items": 1
+        "orientation": 7,
+        "shape": 2,
+        "has_image": true,
+        "order": 15,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 6,
     "fields": {
-      "orientation": 7,
-      "shape": 2,
-      "has_image": true,
-      "order": 17,
-      "number_of_items": 1
+        "orientation": 7,
+        "shape": 2,
+        "has_image": true,
+        "order": 17,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 7,
     "fields": {
-      "orientation": 5,
-      "shape": 2,
-      "has_image": true,
-      "order": 19,
-      "number_of_items": 1
+        "orientation": 5,
+        "shape": 2,
+        "has_image": true,
+        "order": 19,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 8,
     "fields": {
-      "orientation": 8,
-      "shape": 2,
-      "has_image": true,
-      "order": 21,
-      "number_of_items": 1
+        "orientation": 8,
+        "shape": 2,
+        "has_image": true,
+        "order": 21,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 9,
     "fields": {
-      "orientation": 7,
-      "shape": 2,
-      "has_image": true,
-      "order": 29,
-      "number_of_items": 1
+        "orientation": 7,
+        "shape": 2,
+        "has_image": true,
+        "order": 29,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 10,
     "fields": {
-      "orientation": 6,
-      "shape": 2,
-      "has_image": true,
-      "order": 31,
-      "number_of_items": 1
+        "orientation": 6,
+        "shape": 2,
+        "has_image": true,
+        "order": 31,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 11,
     "fields": {
-      "orientation": 8,
-      "shape": 2,
-      "has_image": true,
-      "order": 33,
-      "number_of_items": 1
+        "orientation": 8,
+        "shape": 2,
+        "has_image": true,
+        "order": 33,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 12,
     "fields": {
-      "orientation": 8,
-      "shape": 2,
-      "has_image": true,
-      "order": 35,
-      "number_of_items": 1
+        "orientation": 8,
+        "shape": 2,
+        "has_image": true,
+        "order": 35,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 13,
     "fields": {
-      "orientation": 3,
-      "shape": 1,
-      "has_image": false,
-      "order": 43,
-      "number_of_items": 1
+        "orientation": 3,
+        "shape": 1,
+        "has_image": false,
+        "order": 43,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 14,
     "fields": {
-      "orientation": 6,
-      "shape": 2,
-      "has_image": true,
-      "order": 45,
-      "number_of_items": 1
+        "orientation": 6,
+        "shape": 2,
+        "has_image": true,
+        "order": 45,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 15,
     "fields": {
-      "orientation": 6,
-      "shape": 2,
-      "has_image": true,
-      "order": 47,
-      "number_of_items": 1
+        "orientation": 6,
+        "shape": 2,
+        "has_image": true,
+        "order": 47,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 16,
     "fields": {
-      "orientation": 4,
-      "shape": 1,
-      "has_image": false,
-      "order": 49,
-      "number_of_items": 1
+        "orientation": 4,
+        "shape": 1,
+        "has_image": false,
+        "order": 49,
+        "number_of_items": 1
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 17,
     "fields": {
-      "orientation": null,
-      "shape": 1,
-      "has_image": true,
-      "order": null,
-      "number_of_items": 6
+        "orientation": null,
+        "shape": 1,
+        "has_image": true,
+        "order": null,
+        "number_of_items": 6
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 18,
     "fields": {
-      "orientation": null,
-      "shape": 1,
-      "has_image": false,
-      "order": null,
-      "number_of_items": 10
+        "orientation": null,
+        "shape": 1,
+        "has_image": false,
+        "order": null,
+        "number_of_items": 10
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 19,
     "fields": {
-      "orientation": null,
-      "shape": 2,
-      "has_image": true,
-      "order": null,
-      "number_of_items": 6
+        "orientation": null,
+        "shape": 2,
+        "has_image": true,
+        "order": null,
+        "number_of_items": 6
     }
-  },
-  {
-    "model": "game.BaseGamePiece",
+}, {
+    "model": "game.basegamepiece",
     "pk": 20,
     "fields": {
-      "orientation": null,
-      "shape": 3,
-      "has_image": false,
-      "order": null,
-      "number_of_items": 12
+        "orientation": null,
+        "shape": 3,
+        "has_image": false,
+        "order": null,
+        "number_of_items": 12
     }
-  }
-]
+}]

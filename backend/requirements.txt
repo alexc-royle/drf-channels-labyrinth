@@ -3,3 +3,5 @@ psycopg2
 channels
 channels_redis
 djangorestframework
+django-debug-toolbar
+watchdog

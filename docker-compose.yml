@@ -25,6 +25,19 @@ services:
     depends_on:
       - db
       - redis
+  backendtest:
+    restart: always
+    build: ./backend
+    command: watchmedo auto-restart --recursive --pattern="*.py" --directory="." python3 manage.py test
+    volumes:
+      - ./backend:/code
+    working_dir: /code
+    links:
+      - db:db
+      - redis:redis
+    depends_on:
+      - db
+      - redis
   frontend:
     restart: always
     build: ./frontend
