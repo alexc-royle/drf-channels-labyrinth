@@ -25,6 +25,7 @@ router.register(r'game', views.GameViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('silk/', include('silk.urls'), name="silk"),
     path('api/v1/user/', include("accounts.urls"), name="api_v1_user"),
     path('api/v1/', include(router.urls), name="api_v1_game")
 ]
