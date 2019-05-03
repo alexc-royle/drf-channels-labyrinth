@@ -185,7 +185,7 @@ def create_game_pieces(sender, instance=None, created=False, **kwargs):
         game_pieces = []
         available_piece_order = sample(list(range(1, 51)), 50)
         orientations_by_shape = {}
-        base_game_pieces = BaseGamePiece.objects.all().order_by('order')
+        base_game_pieces = BaseGamePiece.objects.all().order_by('order').prefetch_related('orientation', 'shape')
         collectable_items = CollectableItem.objects.all()
         collectable_items_count = len(collectable_items)
         available_image_order = sample(list(range(collectable_items_count)), 24)

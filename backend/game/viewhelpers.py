@@ -19,12 +19,14 @@ class Start:
     def __init__(self, game, players):
         self.game = game
         self.players = players
-        self.num_players = len(players)
-        self.order_sequence = sample(list(range(1, self.num_players + 1)), self.num_players)
-        self.starting_positions = sample(models.Player.STARTING_POSITION_LIST, 4)
+
+    def process(self):
+        self.num_players = len(self.players)
+        self.order_sequence = self.get_order_sequence()
+        self.starting_positions = self.get_starting_positions()
         self.game_pieces = self.get_game_pieces()
-        self.collectable_items = models.CollectableItem.objects.filter(gamepiece__game_id = self.game.id)
-        self.collectable_items_sequence = sample(list(range(24)), 24)
+        self.collectable_items = list(models.CollectableItem.objects.filter(gamepiece__game_id = self.game.id))
+        self.collectable_items_sequence = self.get_collectable_items_sequence()
         self.items_per_player = 24 / self.num_players
         self.player_items = []
         self.process_players()
@@ -32,9 +34,18 @@ class Start:
         self.game.status = models.Game.INPROGRESS
         self.game.save()
 
+    def get_order_sequence(self):
+        return sample(list(range(1, self.num_players + 1)), self.num_players)
+
+    def get_starting_positions(self):
+        return sample(models.Player.STARTING_POSITION_LIST, 4)
+
     def get_game_pieces(self):
         preserved = Case(*[When(order=order, then=pos) for pos, order in enumerate(self.starting_positions)])
         return models.GamePiece.objects.filter(game_id=self.game.id, order__in=self.starting_positions).order_by(preserved)
+
+    def get_collectable_items_sequence(self):
+        return sample(list(range(24)), 24)
 
     def process_players(self):
         currentIter = 0
@@ -63,10 +74,12 @@ class Start:
 class RotateSpareSquare:
     def __init__(self, pk):
         self.pk = pk
-        self.response = self.rotate()
+
+    def process(self):
+        return self.rotate()
 
     def rotate(self):
-        sparesquare = models.GamePiece.objects.get(game_id=pk, order__isnull=True)
+        sparesquare = models.GamePiece.objects.filter(game_id=self.pk, order__isnull=True).select_related('orientation__shape')[0]
         orientations = models.GamePieceOrientation.objects.filter(
             Q(shape_id=sparesquare.orientation.shape.id),
             Q(order=sparesquare.orientation.order+1) | Q(order=1)
@@ -82,6 +95,8 @@ class InsertSpareSquare:
         self.player = current_player
         self.insert_into = insert_into
         self.insert_at = insert_at
+
+    def process(self):
         self.validate()
         self.insert_spare_square()
 
@@ -89,7 +104,7 @@ class InsertSpareSquare:
         if not self.insert_into in ['top', 'bottom', 'left', 'right']:
             raise ValidationError({ 'detail': 'unknown insert into value given'})
         try:
-            insert_at_num = int(insert_at)
+            insert_at_num = int(self.insert_at)
             if insert_at_num % 2 == 0:
                 self.insert_at = insert_at_num
             else:
@@ -101,7 +116,7 @@ class InsertSpareSquare:
         pieces = self.get_pieces()
         order_by = self.get_order()
         pieces.order_by(order_by)
-        sparesquare = models.GamePiece.objects.get(game_id=pk, order__isnull=True)
+        sparesquare = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
         order_numbers = self.get_order_numbers(pieces)
         self.update_orders(sparesquare, pieces, order_numbers)
 
@@ -151,6 +166,8 @@ class FinishTurn:
     def __init__(self, game, current_player):
         self.game = game
         self.player = current_player
+
+    def process(self):
         self.check_if_completed()
         if self.game.status != models.Game.COMPLETED:
             self.set_current_player()
@@ -191,15 +208,16 @@ class FinishTurn:
 
 class MoveCounter:
     def __init__(self, request, pk, player):
-        self.movex = self.parse_input(request.data['movex'])
-        self.movey = self.parse_input(request.data['movey'])
-        self.value_changed = self.get_changed(self.movex, self.movey)
         self.game_pk = pk
         self.player = player
-        self.old_position = player.game_piece.order
+        self.movex = self.parse_input(request.data['movex'])
+        self.movey = self.parse_input(request.data['movey'])
+
+    def process(self):
+        self.value_changed = self.get_changed(self.movex, self.movey)
+        self.old_position = self.player.game_piece.order
         self.new_position_data = self.get_new_position_data()
         self.update_position()
-
 
     def parse_input(self, input):
         possible_values = [-1, 0, 1]
@@ -248,8 +266,8 @@ class MoveCounter:
         else:
             return (new_position, 'up', 'down')
 
-    def within_bounds_y(self, current_position, movey):
-        new_position = current_position + (movey * 7)
+    def within_bounds_y(self):
+        new_position = self.old_position + (self.movey * 7)
         if (new_position < 1) or (new_position > 49):
             raise ValidationError({ 'detail': 'out of bounds' })
 

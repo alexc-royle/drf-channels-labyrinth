@@ -5,15 +5,12 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
 from . import models
+from . import views
 
 # Create your tests here.
-class GamesTest(APITestCase):
+
+class ShapeTest(APITestCase):
     fixtures = ['game/fixtures/data.json',]
-    def setUp(self):
-        self.first_user = User.objects.create_user('test_user1', 'test1@example.com', 'testpassword')
-        self.second_user = User.objects.create_user('test_user2', 'test2@example.com', 'testpassword')
-        token = Token.objects.get(user=self.first_user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def test_shapes(self):
         expected = ['bend', 'tjunction', 'straight']
@@ -21,6 +18,10 @@ class GamesTest(APITestCase):
         self.assertEqual(shapes.count(), 3)
         for shape in shapes:
             self.assertEqual(shape.title, expected.pop(0))
+
+
+class OrientationTest(APITestCase):
+    fixtures = ['game/fixtures/data.json',]
 
     def test_orientations(self):
         expected = [
@@ -44,6 +45,16 @@ class GamesTest(APITestCase):
             self.assertEqual(orientation.down, down)
             self.assertEqual(orientation.left, left)
             self.assertEqual(orientation.right, right)
+
+
+class CreateGameTest(APITestCase):
+    fixtures = ['game/fixtures/data.json',]
+
+    def setUp(self):
+        self.first_user = User.objects.create_user('test_user1', 'test1@example.com', 'testpassword')
+        self.second_user = User.objects.create_user('test_user2', 'test2@example.com', 'testpassword')
+        token = Token.objects.get(user=self.first_user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def test_create_game(self):
         """
@@ -140,3 +151,16 @@ class GamesTest(APITestCase):
         response = self.client.post(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(models.Game.objects.count(), 0)
+
+class GameViewGetGameOrErrorTest(APITestCase):
+    fixtures = ['game/fixtures/data.json',]
+    def setUp(self):
+        first_user = User.objects.create_user('test_user1', 'test1@example.com', 'testpassword')
+        self.game = models.Game()
+        self.game.creator = first_user
+        self.game.save()
+        self.view = views.GameViewSet()
+
+    def test_get_existing_game(self):
+        game = self.view.get_game_or_error(self.game.id)
+        self.assertEqual(game, self.game)

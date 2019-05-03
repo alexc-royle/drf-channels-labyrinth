@@ -55,7 +55,8 @@ class GameViewSet(viewsets.ModelViewSet):
         game = self.get_game_or_error(pk, models.Game.LOBBY)
         players = models.Player.objects.filter(game_id=pk)
         if players:
-            viewhelpers.Start(game, players)
+            helper = viewhelpers.Start(game, players)
+            helper.process()
             serializer = serializers.GameSerializer(game)
             return Response(serializer.data)
         raise ValidationError({ 'detail': 'no players'})
@@ -72,7 +73,7 @@ class GameViewSet(viewsets.ModelViewSet):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         self.get_request_user_is_current_player_or_400(request, game)
         helper = viewhelpers.RotateSpareSquare(pk)
-        return helper.response
+        return helper.process()
 
     @detail_route(methods=['post'])
     def insertsparesquare(self, request, pk=None):
@@ -80,7 +81,8 @@ class GameViewSet(viewsets.ModelViewSet):
         current_player = self.get_request_user_is_current_player_or_400(request, game)
         insert_into = request.POST['insert_into']
         insert_at = request.POST['insert_at']
-        viewhelpers.InsertSpareSquare(game, current_player, insert_into, insert_at)
+        helper = viewhelpers.InsertSpareSquare(game, current_player, insert_into, insert_at)
+        helper.process()
         game_pieces = models.GamePiece.objects.filter(game_id=pk).order_by('order')
         serializer = serializers.GamePieceSerializer(game_pieces, many=True)
         return Response(serializer.data)
@@ -97,7 +99,8 @@ class GameViewSet(viewsets.ModelViewSet):
     def finishturn(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         current_player = self.get_request_user_is_current_player_or_400(request, game)
-        viewhelpers.FinishTurn(game, current_player)
+        helper = viewhelpers.FinishTurn(game, current_player)
+        helper.process()
         players = models.Player.objects.filter(game_id = pk)
         serializer = serializers.PlayerSerializer(players, many=True)
         return Response(serializer.data)
@@ -106,7 +109,8 @@ class GameViewSet(viewsets.ModelViewSet):
     def movecounter(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         player = self.get_request_user_is_current_player_or_400(request, game)
-        viewhelpers.MoveCounter(request, pk, player)
+        helper = viewhelpers.MoveCounter(request, pk, player)
+        helper.process()
         serializer = serializers.PlayerSerializer(player, many=False)
         return Response(serializer.data)
 
