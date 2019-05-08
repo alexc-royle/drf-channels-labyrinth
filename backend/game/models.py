@@ -115,6 +115,18 @@ class Player(models.Model):
         blank=True
     )
 
+    PRE_INSERT_SPARESQUARE = 1
+    POST_INSERT_SPARESQUARE = 2
+
+    TURN_STATUS_CHOICES = (
+        (PRE_INSERT_SPARESQUARE, 'Pre-insert of spare square'),
+        (POST_INSERT_SPARESQUARE, 'Post-insert of spare square'),
+    )
+    turn_status = models.IntegerField(
+        choices = TURN_STATUS_CHOICES,
+        default = PRE_INSERT_SPARESQUARE
+    )
+
     def remaining_item_count(self):
         return CollectableItem.objects.filter(
             playercollectableitem__player_id = self.id,

@@ -9,7 +9,8 @@
         "starting_game_piece": 1,
         "completed_time": null,
         "order": 2,
-        "starting_position": 43
+        "starting_position": 43,
+        "turn_status": 1
     }
 },
 {
@@ -22,7 +23,8 @@
         "starting_game_piece": 38,
         "completed_time": null,
         "order": 1,
-        "starting_position": 1
+        "starting_position": 1,
+        "turn_status": 1
     }
 },
 {

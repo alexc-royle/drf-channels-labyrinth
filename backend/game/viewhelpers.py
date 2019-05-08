@@ -97,9 +97,14 @@ class InsertSpareSquare:
         self.insert_at = insert_at
 
     def process(self):
+        self.check_player()
         self.validate()
         self.convert_insert_at()
         self.insert_spare_square()
+
+    def check_player(self):
+        if self.player.turn_status != models.Player.PRE_INSERT_SPARESQUARE:
+            raise ValidationError({ 'detail': 'player has already inserted a spare square this turn'})
 
     def validate(self):
         if not self.insert_into or not self.insert_at:
@@ -122,6 +127,7 @@ class InsertSpareSquare:
         sparesquare = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
         order_numbers = self.get_order_numbers(pieces)
         self.update_orders(sparesquare, pieces, order_numbers)
+        self.update_player()
 
     def get_pieces(self):
         if self.insert_into in ['top', 'bottom']:
@@ -164,6 +170,10 @@ class InsertSpareSquare:
         for piece in pieces:
             piece.order = order_numbers.pop(0)
             piece.save()
+
+    def update_player(self):
+        self.player.turn_status = models.Player.POST_INSERT_SPARESQUARE
+        self.player.save()
 
 class FinishTurn:
     def __init__(self, game, current_player):
