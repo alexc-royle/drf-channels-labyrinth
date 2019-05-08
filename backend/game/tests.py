@@ -174,6 +174,7 @@ class InsertSpareSquareTest(APITestCase):
         token = Token.objects.get(user_id=1)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         self.url = reverse('game-insertsparesquare', kwargs={'pk': 1})
+        self.game = game
 
     def test_when_logged_in(self):
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
@@ -190,20 +191,43 @@ class InsertSpareSquareTest(APITestCase):
 
     def test_when_insert_at_not_number(self):
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 'aaa'}, format='json')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_when_insert_at_is_odd(self):
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 3}, format='json')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_when_insert_at_less_than_two(self):
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 0}, format='json')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_when_insert_at_greater_than_six(self):
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 8}, format='json')
-        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_insert_into_not_recognised(self):
+        response = self.client.post(self.url, {'insert_into': 'boo', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_game_in_lobby(self):
+        self.game.status = models.Game.LOBBY
+        self.game.save()
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_game_is_completed(self):
+        self.game.status = models.Game.COMPLETED
+        self.game.save()
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_not_user_turn(self):
+        token = Token.objects.get(user_id=2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_multiple_calls_in_same_turn(self):
+        self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
