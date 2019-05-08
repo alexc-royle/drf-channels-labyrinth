@@ -4,6 +4,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIClient
+import json
+
 from . import models
 from . import views
 
@@ -164,3 +166,24 @@ class GameViewGetGameOrErrorTest(APITestCase):
     def test_get_existing_game(self):
         game = self.view.get_game_or_error(self.game.id)
         self.assertEqual(game, self.game)
+
+class InsertSpareSquareTest(APITestCase):
+    fixtures = ['game/fixtures/data.json', 'game/fixtures/user.json', 'game/fixtures/game.json']
+    def setUp(self):
+        game = models.Game.objects.get(id=1)
+        token = Token.objects.get(user_id=1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.url = reverse('game-insertsparesquare', kwargs={'pk': 1})
+
+    def test_when_logged_in(self):
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_when_logged_out(self):
+        self.client.credentials(HTTP_AUTHORIZATION='')
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_when_no_data_sent(self):
+        response = self.client.post(self.url, {}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

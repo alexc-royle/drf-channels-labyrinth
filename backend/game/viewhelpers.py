@@ -101,6 +101,8 @@ class InsertSpareSquare:
         self.insert_spare_square()
 
     def validate(self):
+        if not self.insert_into or not self.insert_at:
+            raise ValidationError({ 'detail': 'missing required values'})
         if not self.insert_into in ['top', 'bottom', 'left', 'right']:
             raise ValidationError({ 'detail': 'unknown insert into value given'})
         try:

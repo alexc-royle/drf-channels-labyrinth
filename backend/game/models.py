@@ -74,19 +74,25 @@ class Player(models.Model):
         'GamePiece',
         on_delete = models.CASCADE,
         null=True,
+        blank=True,
         related_name = 'currentcounters'
     )
     starting_game_piece = models.ForeignKey(
         'GamePiece',
         on_delete = models.CASCADE,
         null=True,
+        blank=True,
         related_name = 'startcounters'
     )
     completed_time = models.DateTimeField(
-        null=True
+        null=True,
+        blank=True,
     )
 
-    order = models.IntegerField(null=True)
+    order = models.IntegerField(
+        null=True,
+        blank=True
+    )
     TOPLEFT = 1
     TOPRIGHT = 7
     BOTTOMLEFT = 43
@@ -105,7 +111,8 @@ class Player(models.Model):
     )
     starting_position = models.IntegerField(
         choices = STARTING_POSITION_CHOICES,
-        null = True
+        null = True,
+        blank=True
     )
 
     def remaining_item_count(self):
@@ -164,6 +171,7 @@ class Game(models.Model):
         'Player',
         on_delete = models.CASCADE,
         null = True,
+        blank = True,
         related_name = 'winningplayer'
     )
     LOBBY = 1
@@ -180,8 +188,8 @@ class Game(models.Model):
     )
 
 @receiver(post_save, sender=Game)
-def create_game_pieces(sender, instance=None, created=False, **kwargs):
-    if created:
+def create_game_pieces(sender, instance=None, created=False, raw=False, **kwargs):
+    if created and not raw:
         game_pieces = []
         available_piece_order = sample(list(range(1, 51)), 50)
         orientations_by_shape = {}

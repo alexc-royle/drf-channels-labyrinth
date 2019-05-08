@@ -79,8 +79,8 @@ class GameViewSet(viewsets.ModelViewSet):
     def insertsparesquare(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         current_player = self.get_request_user_is_current_player_or_400(request, game)
-        insert_into = request.POST['insert_into']
-        insert_at = request.POST['insert_at']
+        insert_into = request.data.get('insert_into', False)
+        insert_at = request.data.get('insert_at', False)
         helper = viewhelpers.InsertSpareSquare(game, current_player, insert_into, insert_at)
         helper.process()
         game_pieces = models.GamePiece.objects.filter(game_id=pk).order_by('order')
