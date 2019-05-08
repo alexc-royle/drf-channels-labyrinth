@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Case, When, Q, Count
+from django.db.models import Case, When, Q, Count, F
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -231,3 +231,69 @@ class InsertSpareSquareTest(APITestCase):
         self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
         response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 2}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_inserting_from_left(self):
+        """
+        original ids in row: [50, 26, 33, 11, 7, 16, 20]
+        spare square: 36
+        """
+        expected_ids_in_row = [36, 50, 26, 33, 11, 7, 16]
+        expected_spare_id = 20
+        self.client.post(self.url, {'insert_into': 'left', 'insert_at': 2}, format='json')
+        pieces = models.GamePiece.objects.filter(Q(order__range=(8, 14)), Q(game_id=self.game.id)).order_by('order').values_list('id', flat=True)
+        pieces = list(pieces)
+        spare_square = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
+        self.assertEqual(expected_ids_in_row, pieces)
+        self.assertEqual(spare_square.id, expected_spare_id)
+
+    def test_inserting_from_right(self):
+        """
+        original ids in row: [50, 26, 33, 11, 7, 16, 20]
+        spare square: 36
+        """
+        expected_ids_in_row = [26, 33, 11, 7, 16, 20, 36]
+        expected_spare_id = 50
+        self.client.post(self.url, {'insert_into': 'right', 'insert_at': 2}, format='json')
+        pieces = models.GamePiece.objects.filter(Q(order__range=(8, 14)), Q(game_id=self.game.id)).order_by('order').values_list('id', flat=True)
+        pieces = list(pieces)
+        spare_square = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
+        self.assertEqual(expected_ids_in_row, pieces)
+        self.assertEqual(spare_square.id, expected_spare_id)
+
+    def test_inserting_from_top(self):
+        """
+        original ids in column: [4, 11, 21, 31, 28, 18, 27]
+        spare square: 36
+        """
+        expected_ids_in_column = [36, 4, 11, 21, 31, 28, 18]
+        expected_spare_id = 27
+        self.client.post(self.url, {'insert_into': 'top', 'insert_at': 4}, format='json')
+        pieces = models.GamePiece.objects.annotate(
+            ordermod=F('order') % 7
+        ).filter(
+            Q(ordermod=4),
+            Q(game_id=self.game.id)
+        ).order_by('order').values_list('id', flat=True)
+        pieces = list(pieces)
+        spare_square = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
+        self.assertEqual(expected_ids_in_column, pieces)
+        self.assertEqual(spare_square.id, expected_spare_id)
+
+    def test_inserting_from_bottom(self):
+        """
+        original ids in column: [4, 11, 21, 31, 28, 18, 27]
+        spare square: 36
+        """
+        expected_ids_in_column = [11, 21, 31, 28, 18, 27, 36]
+        expected_spare_id = 4
+        self.client.post(self.url, {'insert_into': 'bottom', 'insert_at': 4}, format='json')
+        pieces = models.GamePiece.objects.annotate(
+            ordermod=F('order') % 7
+        ).filter(
+            Q(ordermod=4),
+            Q(game_id=self.game.id)
+        ).order_by('order').values_list('id', flat=True)
+        pieces = list(pieces)
+        spare_square = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
+        self.assertEqual(expected_ids_in_column, pieces)
+        self.assertEqual(spare_square.id, expected_spare_id)

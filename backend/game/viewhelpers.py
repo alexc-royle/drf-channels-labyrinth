@@ -123,7 +123,7 @@ class InsertSpareSquare:
     def insert_spare_square(self):
         pieces = self.get_pieces()
         order_by = self.get_order()
-        pieces.order_by(order_by)
+        pieces = pieces.order_by(order_by)
         sparesquare = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
         order_numbers = self.get_order_numbers(pieces)
         self.update_orders(sparesquare, pieces, order_numbers)
