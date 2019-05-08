@@ -28,7 +28,7 @@ services:
   backendtest:
     restart: always
     build: ./backend
-    command: watchmedo auto-restart --recursive --pattern="*.py" --directory="." python3 manage.py test
+    command: watchmedo shell-command --recursive --pattern="*.py" --command="python3 manage.py test --noinput"
     volumes:
       - ./backend:/code
     working_dir: /code
