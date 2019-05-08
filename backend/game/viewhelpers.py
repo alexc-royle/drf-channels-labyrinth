@@ -98,6 +98,7 @@ class InsertSpareSquare:
 
     def process(self):
         self.validate()
+        self.convert_insert_at()
         self.insert_spare_square()
 
     def validate(self):
@@ -105,14 +106,14 @@ class InsertSpareSquare:
             raise ValidationError({ 'detail': 'missing required values'})
         if not self.insert_into in ['top', 'bottom', 'left', 'right']:
             raise ValidationError({ 'detail': 'unknown insert into value given'})
+        if not self.insert_at in [2, 4, 6, '2', '4', '6']:
+            raise ValidationError({ 'detail': 'invalid insert_at value given'})
+
+    def convert_insert_at(self):
         try:
-            insert_at_num = int(self.insert_at)
-            if insert_at_num % 2 == 0:
-                self.insert_at = insert_at_num
-            else:
-                raise ValidationError({ 'detail': 'unknown insert at value given'})
+            self.insert_at = int(self.insert_at)
         except ValueError:
-            raise ValidationError({ 'detail': 'unknown insert at value given'})
+            raise ValidationError({ 'detail': 'invalid insert at value given'})
 
     def insert_spare_square(self):
         pieces = self.get_pieces()

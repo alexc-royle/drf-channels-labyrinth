@@ -187,3 +187,23 @@ class InsertSpareSquareTest(APITestCase):
     def test_when_no_data_sent(self):
         response = self.client.post(self.url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_insert_at_not_number(self):
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 'aaa'}, format='json')
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_insert_at_is_odd(self):
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 3}, format='json')
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_insert_at_less_than_two(self):
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 0}, format='json')
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_when_insert_at_greater_than_six(self):
+        response = self.client.post(self.url, {'insert_into': 'top', 'insert_at': 8}, format='json')
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
