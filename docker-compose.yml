@@ -2,10 +2,10 @@ version: '3'
 
 services:
   db:
-    restart: always
+    restart: unless-stopped
     image: "postgres:alpine"
   redis:
-    restart: always
+    restart: unless-stopped
     image: "redis:alpine"
     ports:
       - 6379
@@ -13,7 +13,7 @@ services:
     volumes:
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
   backend:
-    restart: always
+    restart: unless-stopped
     build: ./backend
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
@@ -26,7 +26,7 @@ services:
       - db
       - redis
   backendtest:
-    restart: always
+    restart: unless-stopped
     build: ./backend
     command: watchmedo shell-command --recursive --pattern="*.py" --command="python3 manage.py test --noinput"
     volumes:
@@ -39,7 +39,7 @@ services:
       - db
       - redis
   frontend:
-    restart: always
+    restart: unless-stopped
     build: ./frontend
     volumes:
       - ./frontend:/app
