@@ -297,3 +297,9 @@ class InsertSpareSquareTest(APITestCase):
         spare_square = models.GamePiece.objects.get(game_id=self.game.id, order__isnull=True)
         self.assertEqual(expected_ids_in_column, pieces)
         self.assertEqual(spare_square.id, expected_spare_id)
+
+    def test_undoing_previous_player_insert_square(self):
+        self.game.spare_square_last_inserted_into = "top"
+        self.game.spare_square_last_inserted_at = 2
+        response = self.client.post(self.url, {'insert_into': 'bottom', 'insert_at': 2}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

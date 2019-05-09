@@ -9,8 +9,7 @@
         "starting_game_piece": 1,
         "completed_time": null,
         "order": 2,
-        "starting_position": 43,
-        "turn_status": 1
+        "starting_position": 43
     }
 },
 {
@@ -23,8 +22,27 @@
         "starting_game_piece": 38,
         "completed_time": null,
         "order": 1,
-        "starting_position": 1,
-        "turn_status": 1
+        "starting_position": 1
+    }
+},
+{
+    "model": "game.playerturn",
+    "pk": 1,
+    "fields": {
+        "player": 1,
+        "turn_status": 2,
+        "spare_square_inserted_into": "top",
+        "spare_square_inserted_at": 2
+    }
+},
+{
+    "model": "game.playerturn",
+    "pk": 2,
+    "fields": {
+        "player": 2,
+        "turn_status": 1,
+        "spare_square_inserted_into": null,
+        "spare_square_inserted_at": null
     }
 },
 {

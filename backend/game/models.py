@@ -115,6 +115,21 @@ class Player(models.Model):
         blank=True
     )
 
+    def remaining_item_count(self):
+        return CollectableItem.objects.filter(
+            playercollectableitem__player_id = self.id,
+            playercollectableitem__collected = False
+        ).count()
+
+    def on_starting_square(self):
+        return self.game_piece == self.starting_game_piece
+
+
+class PlayerTurn(models.Model):
+    player = models.ForeignKey(
+        'Player',
+        on_delete = models.CASCADE
+    )
     PRE_INSERT_SPARESQUARE = 1
     POST_INSERT_SPARESQUARE = 2
 
@@ -126,17 +141,23 @@ class Player(models.Model):
         choices = TURN_STATUS_CHOICES,
         default = PRE_INSERT_SPARESQUARE
     )
-
-    def remaining_item_count(self):
-        return CollectableItem.objects.filter(
-            playercollectableitem__player_id = self.id,
-            playercollectableitem__collected = False
-        ).count()
-
-    def on_starting_square(self):
-        return self.game_piece == self.starting_game_piece
-
-
+    spare_square_inserted_into = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    spare_square_inserted_at = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    def __str__(self):
+        return "id: {}, player_id: {}, status: {}, inserted_into: {}, inserted_at: {}".format(
+            self.id,
+            self.player.id,
+            self.turn_status,
+            self.spare_square_inserted_into,
+            self.spare_square_inserted_at
+        )
 
 class PlayerCollectableItem(models.Model):
     player = models.ForeignKey(
