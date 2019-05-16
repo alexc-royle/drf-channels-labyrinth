@@ -57,8 +57,15 @@ class Start:
             player.save()
             if player.order == 1:
                 self.game.current_player = player
+                self.create_turn(player)
+
             self.process_collectables(player)
             currentIter = currentIter + 1
+
+    def create_turn(self, player):
+        player_turn = models.PlayerTurn()
+        player_turn.player = player
+        player_turn.save()
 
     def process_collectables(self, player):
         collectable_iter = 0

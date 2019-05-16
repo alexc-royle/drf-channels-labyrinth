@@ -1,0 +1,472 @@
+[{
+    "model": "game.player",
+    "pk": 1,
+    "fields": {
+        "game": 1,
+        "user": 1,
+        "game_piece": null,
+        "starting_game_piece": null,
+        "completed_time": null,
+        "order": null,
+        "starting_position": null
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 1,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 14,
+        "order": 29
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 2,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": null,
+        "order": 2
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 3,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 18
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 4,
+    "fields": {
+        "game": 1,
+        "orientation": 8,
+        "collectable_item": 23,
+        "order": 35
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 5,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": null,
+        "order": 42
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 6,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 21,
+        "order": 40
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 7,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 37
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 8,
+    "fields": {
+        "game": 1,
+        "orientation": 5,
+        "collectable_item": 10,
+        "order": 19
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 9,
+    "fields": {
+        "game": 1,
+        "orientation": 5,
+        "collectable_item": 20,
+        "order": 5
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 10,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 39
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 11,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": 17,
+        "order": 27
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 12,
+    "fields": {
+        "game": 1,
+        "orientation": 1,
+        "collectable_item": null,
+        "order": 16
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 13,
+    "fields": {
+        "game": 1,
+        "orientation": 6,
+        "collectable_item": 11,
+        "order": 31
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 14,
+    "fields": {
+        "game": 1,
+        "orientation": 10,
+        "collectable_item": null,
+        "order": 22
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 15,
+    "fields": {
+        "game": 1,
+        "orientation": 8,
+        "collectable_item": 30,
+        "order": 21
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 16,
+    "fields": {
+        "game": 1,
+        "orientation": 5,
+        "collectable_item": 4,
+        "order": 3
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 17,
+    "fields": {
+        "game": 1,
+        "orientation": 1,
+        "collectable_item": 25,
+        "order": 48
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 18,
+    "fields": {
+        "game": 1,
+        "orientation": 6,
+        "collectable_item": 12,
+        "order": 47
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 19,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 14
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 20,
+    "fields": {
+        "game": 1,
+        "orientation": 10,
+        "collectable_item": null,
+        "order": 30
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 21,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 26
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 22,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 12
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 23,
+    "fields": {
+        "game": 1,
+        "orientation": 3,
+        "collectable_item": 1,
+        "order": 44
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 24,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": 29,
+        "order": 13
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 25,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 23
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 26,
+    "fields": {
+        "game": 1,
+        "orientation": 10,
+        "collectable_item": null,
+        "order": 9
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 27,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 13,
+        "order": 32
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 28,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 38
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 29,
+    "fields": {
+        "game": 1,
+        "orientation": 1,
+        "collectable_item": null,
+        "order": 1
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 30,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 46
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 31,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": null,
+        "order": 7
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 32,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": 8,
+        "order": 24
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 33,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 2,
+        "order": 10
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 34,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 28,
+        "order": 15
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 35,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 27,
+        "order": 17
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 36,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 34
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 37,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 22,
+        "order": 36
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 38,
+    "fields": {
+        "game": 1,
+        "orientation": 10,
+        "collectable_item": null,
+        "order": 11
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 39,
+    "fields": {
+        "game": 1,
+        "orientation": 6,
+        "collectable_item": 24,
+        "order": 20
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 40,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": null
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 41,
+    "fields": {
+        "game": 1,
+        "orientation": 7,
+        "collectable_item": 16,
+        "order": 25
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 42,
+    "fields": {
+        "game": 1,
+        "orientation": 6,
+        "collectable_item": 7,
+        "order": 45
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 43,
+    "fields": {
+        "game": 1,
+        "orientation": 8,
+        "collectable_item": 6,
+        "order": 33
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 44,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 28
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 45,
+    "fields": {
+        "game": 1,
+        "orientation": 4,
+        "collectable_item": null,
+        "order": 49
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 46,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": null,
+        "order": 8
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 47,
+    "fields": {
+        "game": 1,
+        "orientation": 2,
+        "collectable_item": 18,
+        "order": 4
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 48,
+    "fields": {
+        "game": 1,
+        "orientation": 9,
+        "collectable_item": null,
+        "order": 6
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 49,
+    "fields": {
+        "game": 1,
+        "orientation": 3,
+        "collectable_item": null,
+        "order": 43
+    }
+}, {
+    "model": "game.gamepiece",
+    "pk": 50,
+    "fields": {
+        "game": 1,
+        "orientation": 10,
+        "collectable_item": null,
+        "order": 41
+    }
+}, {
+    "model": "game.game",
+    "pk": 1,
+    "fields": {
+        "creator": 1,
+        "current_player": null,
+        "winner": null,
+        "status": 1
+    }
+}]

@@ -261,8 +261,8 @@ def create_game_pieces(sender, instance=None, created=False, raw=False, **kwargs
         GamePiece.objects.bulk_create(random_ordered_game_pieces)
 
 @receiver(post_save, sender=Game)
-def create_user_counter(sender, instance=None, created=False, **kwargs):
-    if created:
+def create_user_counter(sender, instance=None, created=False, raw=False, **kwargs):
+    if created and not raw:
         user_counter = Player()
         user_counter.game = instance
         user_counter.user = instance.creator

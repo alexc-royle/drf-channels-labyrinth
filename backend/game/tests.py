@@ -301,3 +301,34 @@ class InsertSpareSquareTest(APITestCase):
     def test_undoing_previous_player_insert_square(self):
         response = self.client.post(self.url, {'insert_into': 'bottom', 'insert_at': 2}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class StartGameTest(APITestCase):
+    fixtures = ['game/fixtures/data.json', 'game/fixtures/user.json', 'game/fixtures/start_game_data.json']
+    def setUp(self):
+        game = models.Game.objects.get(id=1)
+        token = Token.objects.get(user_id=1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.url = reverse('game-start', kwargs={'pk': 1})
+        self.game = game
+
+    def test_when_logged_in(self):
+        response = self.client.post(self.url, {}, format='json')
+        game = models.Game.objects.get(id=1)
+        players = models.Player.objects.filter(game_id=game.id)
+        player = models.Player.objects.filter(game_id=game.id).first()
+        player_collectables = models.PlayerCollectableItem.objects.filter(player_id=player.id)
+        player_turns = models.PlayerTurn.objects.filter(player_id=player.id)
+        player_turn = player_turns.first()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(game.status, models.Game.INPROGRESS)
+        self.assertTrue(players.count() == 1)
+        self.assertTrue(game.current_player == player)
+        self.assertTrue(player.starting_position in [1, 7, 43, 49])
+        self.assertTrue(player.game_piece == player.starting_game_piece)
+        self.assertTrue(player.game_piece.order in [1, 7, 43, 49])
+        self.assertEqual(player_collectables.count(), 24)
+        self.assertEqual(player_turns.count(), 1)
+        self.assertEqual(player_turn.turn_status, models.PlayerTurn.PRE_INSERT_SPARESQUARE)
+        self.assertEqual(player_turn.spare_square_inserted_into, None)
+        self.assertEqual(player_turn.spare_square_inserted_at, None)
