@@ -53,6 +53,7 @@ class GameViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['post'])
     def start(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.LOBBY)
+        player = self.get_request_user_is_game_player_or_400(request, game)
         players = models.Player.objects.filter(game_id=pk)
         if players:
             helper = viewhelpers.Start(game, players)
@@ -131,3 +132,9 @@ class GameViewSet(viewsets.ModelViewSet):
             return game.current_player
         else:
             raise ValidationError({ 'detail': 'not current player' })
+
+    def get_request_user_is_game_player_or_400(self, request, game):
+        player = models.Player.objects.filter(game_id=game.id, user_id=request.user.id)
+        if not player:
+            raise ValidationError({ 'detail': 'not a player of the given game' })
+        return player
