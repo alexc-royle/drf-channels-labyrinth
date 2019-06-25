@@ -28,7 +28,7 @@ services:
   backendtest:
     restart: unless-stopped
     build: ./backend
-    command: watchmedo shell-command --recursive --pattern="*.py" --command="python3 manage.py test --noinput"
+    command: watchmedo shell-command --recursive --pattern="*.py" --command="coverage run --source='.' manage.py test --noinput; coverage report -m"
     volumes:
       - ./backend:/code
     working_dir: /code

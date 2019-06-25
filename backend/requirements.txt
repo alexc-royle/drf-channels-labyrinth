@@ -5,3 +5,4 @@ channels_redis
 djangorestframework
 watchdog
 django-silk
+coverage

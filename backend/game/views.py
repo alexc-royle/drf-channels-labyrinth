@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from . import serializers
 from . import models
-from . import viewhelpers
+from . import logic
 
 class GameViewSet(viewsets.ModelViewSet):
     queryset = models.Game.objects.all()
@@ -56,7 +56,7 @@ class GameViewSet(viewsets.ModelViewSet):
         player = self.get_request_user_is_game_player_or_400(request, game)
         players = models.Player.objects.filter(game_id=pk)
         if players:
-            helper = viewhelpers.Start(game, players)
+            helper = logic.Start(game, players)
             helper.process()
             serializer = serializers.GameSerializer(game)
             return Response(serializer.data)
@@ -73,7 +73,7 @@ class GameViewSet(viewsets.ModelViewSet):
     def rotatesparesquare(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         self.get_request_user_is_current_player_or_400(request, game)
-        helper = viewhelpers.RotateSpareSquare(pk)
+        helper = logic.RotateSpareSquare(pk)
         return helper.process()
 
     @detail_route(methods=['post'])
@@ -82,7 +82,7 @@ class GameViewSet(viewsets.ModelViewSet):
         current_player = self.get_request_user_is_current_player_or_400(request, game)
         insert_into = request.data.get('insert_into', False)
         insert_at = request.data.get('insert_at', False)
-        helper = viewhelpers.InsertSpareSquare(game, current_player, insert_into, insert_at)
+        helper = logic.InsertSpareSquare(game, current_player, insert_into, insert_at)
         helper.process()
         game_pieces = models.GamePiece.objects.filter(game_id=pk).order_by('order')
         serializer = serializers.GamePieceSerializer(game_pieces, many=True)
@@ -100,7 +100,7 @@ class GameViewSet(viewsets.ModelViewSet):
     def finishturn(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         current_player = self.get_request_user_is_current_player_or_400(request, game)
-        helper = viewhelpers.FinishTurn(game, current_player)
+        helper = logic.FinishTurn(game, current_player)
         helper.process()
         players = models.Player.objects.filter(game_id = pk)
         serializer = serializers.PlayerSerializer(players, many=True)
@@ -110,7 +110,7 @@ class GameViewSet(viewsets.ModelViewSet):
     def movecounter(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         player = self.get_request_user_is_current_player_or_400(request, game)
-        helper = viewhelpers.MoveCounter(request, pk, player)
+        helper = logic.MoveCounter(request, pk, player)
         helper.process()
         serializer = serializers.PlayerSerializer(player, many=False)
         return Response(serializer.data)
