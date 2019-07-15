@@ -9,6 +9,7 @@ from game.modelslib.collectableitem import *
 from game.modelslib.gamepieceorientation import *
 from game.modelslib.gamepiece import *
 from game.modelslib.player import *
+from .. import decorators
 
 # Create your models here.
 
@@ -44,7 +45,7 @@ class Game(models.Model):
         default = LOBBY
     )
 
-@receiver(post_save, sender=Game)
+@decorators.suspendingreceiver(post_save, sender=Game)
 def create_game_pieces(sender, instance=None, created=False, raw=False, **kwargs):
     if created and not raw:
         game_pieces = []
@@ -84,7 +85,7 @@ def create_game_pieces(sender, instance=None, created=False, raw=False, **kwargs
 
         GamePiece.objects.bulk_create(random_ordered_game_pieces)
 
-@receiver(post_save, sender=Game)
+@decorators.suspendingreceiver(post_save, sender=Game)
 def create_user_counter(sender, instance=None, created=False, raw=False, **kwargs):
     if created and not raw:
         user_counter = Player()

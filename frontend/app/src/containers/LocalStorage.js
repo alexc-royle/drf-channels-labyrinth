@@ -9,7 +9,9 @@ class LocalStorage extends React.Component {
     return (<App />);
   }
   componentDidUpdate(prevProps) {
-      if (prevProps.isUserAuthenticated !== this.props.isUserAuthenticated) {
+    const { isUserAuthenticated: wasUserAuthenticated } = prevProps;
+    const { isUserAuthenticated } = this.props;
+      if (wasUserAuthenticated !== isUserAuthenticated) {
           this.props.saveUserDataToLocalStorage();
       }
   }

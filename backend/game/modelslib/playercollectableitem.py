@@ -7,9 +7,10 @@ class PlayerCollectableItem(models.Model):
         'Player',
         on_delete = models.CASCADE
     )
-    collectable_item = models.ForeignKey(
+    collectable_item = models.OneToOneField(
         'CollectableItem',
         on_delete = models.CASCADE,
+        related_name = 'playercollectableitem',
     )
     order = models.IntegerField()
     collected = models.BooleanField(default=False)

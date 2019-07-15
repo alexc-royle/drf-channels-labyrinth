@@ -6,3 +6,4 @@ djangorestframework
 watchdog
 django-silk
 coverage
+model_mommy

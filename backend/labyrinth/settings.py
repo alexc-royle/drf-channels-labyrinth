@@ -159,3 +159,5 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+SUSPEND_SIGNALS = False

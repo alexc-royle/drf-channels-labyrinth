@@ -21,14 +21,15 @@ class FinishTurn:
         self.player = current_player
 
     def process(self):
-        self.check_if_completed()
+        if not self.check_if_completed():
+            self.check_player_on_collectable()
         if self.game.status != models.Game.COMPLETED:
             self.set_current_player()
 
     def check_if_completed(self):
         game_changed = False
         player_changed = False
-        if self.player.remaining_item_count() == 0 and self.player.on_starting_square():
+        if self.player.remaining_collectable_item_count() == 0 and self.player.on_starting_square():
             self.player.completed_time = datetime.now()
             self.player.save()
             if not self.game.winner:
@@ -39,6 +40,14 @@ class FinishTurn:
                 game_changed = True
             if game_changed:
                 self.game.save()
+            return True
+        return False
+
+    def check_player_on_collectable(self):
+        if self.player.on_next_collectable_item():
+            next_item = self.player.next_collectable_item()
+            next_item.playercollectableitem.collected = True
+            next_item.playercollectableitem.save()
 
     def should_continue(self):
         all_player_count = models.Player.objects.filter(game_id = self.game.id).count()
@@ -53,8 +62,14 @@ class FinishTurn:
         next_player = models.Player.objects.filter(
             Q(game_id = self.game.id),
             Q(completed_time = None),
-            Q(order__gt = self.player.order) | Q(order__gte = 1)
-        ).order_by('-order').first()
+            Q(order__gt = self.player.order)
+        ).order_by('order').first()
+        if not next_player:
+            next_player = models.Player.objects.filter(
+                Q(game_id = self.game.id),
+                Q(completed_time = None),
+                Q(order__gte = 1)
+            ).order_by('order').first()
         if next_player:
             self.game.current_player = next_player
             self.game.save()

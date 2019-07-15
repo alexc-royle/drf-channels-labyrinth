@@ -46,7 +46,7 @@ class CreateGameTest(APITestCase):
         self.assertEqual(player.starting_game_piece, None)
         self.assertEqual(player.completed_time, None)
         self.assertEqual(player.starting_position, None)
-        self.assertEqual(player.remaining_item_count(), 0)
+        self.assertEqual(player.remaining_collectable_item_count(), 0)
         self.assertEqual(player.on_starting_square(), True)
 
     def test_create_game_creates_game_pieces(self):
