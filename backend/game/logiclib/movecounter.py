@@ -19,10 +19,11 @@ class MoveCounter:
     def __init__(self, request, pk, player):
         self.game_pk = pk
         self.player = player
-        self.movex = self.parse_input(request.data['movex'])
-        self.movey = self.parse_input(request.data['movey'])
+        self.request = request
 
     def process(self):
+        self.movex = self.parse_input(self.request.data['movex'])
+        self.movey = self.parse_input(self.request.data['movey'])
         self.value_changed = self.get_changed(self.movex, self.movey)
         self.old_position = self.player.game_piece.order
         self.new_position_data = self.get_new_position_data()
