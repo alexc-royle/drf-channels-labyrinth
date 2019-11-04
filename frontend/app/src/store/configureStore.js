@@ -1,18 +1,24 @@
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
-import localStorageMiddleware from '../middleware/localStorage';
-import APIMiddleware from '../middleware/api';
-import app from '../reducers/index';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import { persistStore } from 'redux-persist';
+import thunkMiddleware from 'redux-thunk';
+import FetchAPI from '../middleware/fetchapi';
+import reducers from '../reducers/index';
 
-const configureStore = () => {
-  const middlewares = [thunk, localStorageMiddleware, APIMiddleware];
-  if(process.env.NODE_ENV !== 'production') {
-    middlewares.push(logger);
+export default () => {
+  const logger = createLogger({});
+  let enhancers;
+  if (process.env.NODE_ENV !== 'production') {
+    enhancers = compose(applyMiddleware(thunkMiddleware, FetchAPI, logger));
+  } else {
+    enhancers = compose(applyMiddleware(thunkMiddleware, FetchAPI));
   }
-  return createStore(
-    app,
-    applyMiddleware(...middlewares)
+  const configureStore = initialState => (
+    createStore(reducers, initialState, enhancers)
   );
-}
-export default configureStore;
+
+  // Create store
+  const store = configureStore({});
+  const persistor = persistStore(store);
+  return { store, persistor };
+};

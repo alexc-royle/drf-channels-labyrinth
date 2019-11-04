@@ -1,10 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import LocalStorage from '../containers/LocalStorage';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './App';
 
-const Root = ({ store }) => (
+const Root = ({ store, persistor }) => (
   <Provider store={store}>
-    <LocalStorage/>
+    <PersistGate loading={null} persistor={persistor}>
+        <App/>
+    </PersistGate>
   </Provider>
 );
 export default Root;

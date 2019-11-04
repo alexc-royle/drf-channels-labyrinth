@@ -2,37 +2,36 @@ import React from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { helpers } from '../reducers';
+import PublicRoute from '../hoc/PublicRoute';
 import RegistrationForm from '../components/RegistrationForm';
 import RegistrationSuccess from '../components/RegistrationSuccess';
 
-class Register extends React.Component {
-  render() {
+export class Register extends React.Component {
+    render() {
 		const {
-      successfulRegistration,
-      registerUser,
-      registerUsernameChanged,
-      registerEmailChanged,
-      registerPasswordChanged,
-      usernameErrors,
-      emailErrors,
-      passwordErrors
-    } = this.props;
-    if (!successfulRegistration) {
-      return (
-  			<RegistrationForm
-          onRegisterButtonClick={registerUser}
-          onUsernameChange={registerUsernameChanged}
-          onEmailChange={registerEmailChanged}
-          onPasswordChange={registerPasswordChanged}
-          usernameErrors={usernameErrors}
-          emailErrors={emailErrors}
-          passwordErrors={passwordErrors}
-        />
-  		);
-    }
-		return (
-      <RegistrationSuccess />
-    )
+            successfulRegistration,
+            registerUser,
+            registerUsernameChanged,
+            registerEmailChanged,
+            registerPasswordChanged,
+            usernameErrors,
+            emailErrors,
+            passwordErrors
+        } = this.props;
+        if (!successfulRegistration) {
+            return (
+  	            <RegistrationForm
+                    onRegisterButtonClick={registerUser}
+                    onUsernameChange={registerUsernameChanged}
+                    onEmailChange={registerEmailChanged}
+                    onPasswordChange={registerPasswordChanged}
+                    usernameErrors={usernameErrors}
+                    emailErrors={emailErrors}
+                    passwordErrors={passwordErrors}
+                />
+  		    );
+        }
+	    return (<RegistrationSuccess />);
 	}
 };
 
@@ -50,4 +49,6 @@ const ConnectedRegister = connect(
 	actions
 )(Register);
 
-export default ConnectedRegister;
+const PublicRouteRegister = PublicRoute(ConnectedRegister);
+
+export default PublicRouteRegister;

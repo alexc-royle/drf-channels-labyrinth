@@ -2,9 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { helpers } from '../reducers';
+import PublicRoute from '../hoc/PublicRoute';
 import LoginForm from '../components/LoginForm';
 
-class Login extends React.Component {
+export class Login extends React.Component {
   render() {
 		const {
       loginUser,
@@ -14,11 +15,11 @@ class Login extends React.Component {
     } = this.props;
 		return (
 			<LoginForm
-        onLoginButtonClick={loginUser}
-        onUsernameChange={loginUsernameChanged}
-        onPasswordChange={loginPasswordChanged}
-        hasError={error}
-      />
+                onLoginButtonClick={loginUser}
+                onUsernameChange={loginUsernameChanged}
+                onPasswordChange={loginPasswordChanged}
+                hasError={error}
+            />
 		);
 	}
 };
@@ -34,4 +35,6 @@ const ConnectedLogin = connect(
 	actions
 )(Login);
 
-export default ConnectedLogin;
+const PublicRouteLogin = PublicRoute(ConnectedLogin);
+
+export default PublicRouteLogin;

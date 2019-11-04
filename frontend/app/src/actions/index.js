@@ -6,12 +6,16 @@ export const loginUser = (event) => (dispatch, getState) => {
   if(!alreadySubmitted) {
     dispatch({
       type: 'API_REQUEST',
-      body: {
-        username: helpers.getLoginUsername(state),
-        password: helpers.getLoginPassword(state)
-      },
-      url: 'user/authenticate',
-      types: ['LOGIN_REQUEST_SUBMITTED', 'LOGIN_RESPONSE_SUCCESS_RECEIVED', 'LOGIN_RESPONSE_ERROR_RECEIVED']
+      types: ['LOGIN_REQUEST_SUBMITTED', '', 'LOGIN_RESPONSE_ERROR_RECEIVED'],
+      requests: [{
+        url: 'user/authenticate',
+        body: {
+          username: helpers.getLoginUsername(state),
+          password: helpers.getLoginPassword(state)
+        },
+        onSuccess: 'LOGIN_RESPONSE_SUCCESS_RECEIVED',
+        method: 'post'
+      }]
     });
   }
 }
@@ -62,29 +66,18 @@ export const registerUser = (event) => (dispatch, getState) => {
   const alreadySubmitted = helpers.getIsAwaitingRegistrationResponse(state);
   if(!alreadySubmitted) {
     dispatch({
-      type: 'REGISTER_REQUEST_SUBMITTED'
-    });
-    dispatch({
       type: 'API_REQUEST',
-      body: {
-        username: helpers.getRegistrationUsername(state),
-        email: helpers.getRegistrationEmail(state),
-        password: helpers.getRegistrationPassword(state)
-      },
-      url: 'user/create',
-      callback: (error, data) => {
-        if (error) {
-          dispatch({
-            type: 'REGISTER_RESPONSE_ERROR_RECEIVED',
-            data: error.data
-          })
-        } else {
-          dispatch({
-            type: 'REGISTER_RESPONSE_SUCCESS_RECEIVED',
-            data
-          });
-        }
-      }
+      types: ['REGISTER_REQUEST_SUBMITTED', '', 'REGISTER_RESPONSE_ERROR_RECEIVED'],
+      requests: [{
+        url: 'user/create',
+        body: {
+          username: helpers.getRegistrationUsername(state),
+          email: helpers.getRegistrationEmail(state),
+          password: helpers.getRegistrationPassword(state)
+        },
+        onSuccess: 'REGISTER_RESPONSE_SUCCESS_RECEIVED',
+        method: 'post'
+      }]
     });
   }
 }

@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const loggedIn = (state = false, action) => {
   switch(action.type) {
@@ -14,8 +16,10 @@ const loggedIn = (state = false, action) => {
 }
 
 const id = (state='', action) => {
+  console.log(action.type);
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
+      console.log('here');
       return action.payload.user_id;
     case "LOGGED_OUT":
       return '';
@@ -65,6 +69,11 @@ const email = (state='', action) => {
   }
 }
 
+const persistConfig = {
+    key: 'user',
+    storage
+}
+
 const user = combineReducers({
   loggedIn,
   id,
@@ -72,7 +81,9 @@ const user = combineReducers({
   username,
   email
 });
-export default user;
+
+const persistedUser = persistReducer(persistConfig, user);
+export default persistedUser;
 
 export const getIsUserAuthenticated = (state) => state.loggedIn;
 export const getUserToken = (state) => state.token;
