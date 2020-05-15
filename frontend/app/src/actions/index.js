@@ -1,6 +1,8 @@
+import { normalize } from 'normalizr';
+import * as schema from './schema';
 import { helpers } from '../reducers';
 
-export const loginUser = (event) => (dispatch, getState) => {
+export const loginUser = () => (dispatch, getState) => {
   const state = getState();
   const alreadySubmitted = helpers.getIsAwaitingLoginResponse(state);
   if(!alreadySubmitted) {
@@ -61,7 +63,7 @@ export const logoutUser = () => {
   };
 }
 
-export const registerUser = (event) => (dispatch, getState) => {
+export const registerUser = () => (dispatch, getState) => {
   const state = getState();
   const alreadySubmitted = helpers.getIsAwaitingRegistrationResponse(state);
   if(!alreadySubmitted) {
@@ -99,4 +101,128 @@ export const registerPasswordChanged = (event) => {
     type: 'REGISTER_PASSWORD_UPDATED',
     password: event.target.value
   }
+}
+
+export const getGamesList = () => (dispatch, getState) => {
+    const state = getState();
+    const userToken = helpers.getUserToken(state);
+    dispatch({
+      type: 'API_REQUEST',
+      types: ['GAMES_LIST_REQUEST_SUBMITTED', '', 'GAMES_LIST_RESPONSE_ERROR_RECEIVED'],
+      requests: [{
+        url: 'game',
+        userToken,
+        onSuccess: (data) => {
+          console.log(data);
+            dispatch({
+              type: 'GAMES_LIST_RESPONSE_RECEIVED',
+              response: normalize(data, schema.gamesPaginationSchema)
+            })
+        },
+        method: 'get'
+      }]
+    });
+}
+
+export const requestGame = (gameId) => (dispatch, getState) => {
+    const state = getState();
+    const userToken = helpers.getUserToken(state);
+    dispatch({
+      type: 'API_REQUEST',
+      types: ['GAME_REQUEST_SUBMITTED', '', 'GAME_RESPONSE_ERROR_RECEIVED'],
+      requests: [{
+        url: `game/${gameId}/`,
+        userToken,
+        onSuccess: (data) => {
+          dispatch({
+            type: 'GAME_RESPONSE_RECEIVED',
+            response: normalize(data, schema.gameSchema)
+          })
+        },
+        method: 'get'
+      }]
+    });
+}
+
+export const requestGamePieces = (gameId) => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['GAME_PIECES_REQUEST_SUBMITTED', '', 'GAME_PIECES_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: `game/${gameId}/pieces`,
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'GAME_PIECES_RESPONSE_RECEIVED',
+          response: normalize(data, [schema.gamePieceSchema]),
+          gameId
+        })
+      },
+      method: 'get'
+    }]
+  });
+}
+
+export const requestGamePlayers = (gameId) => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['GAME_PLAYER_REQUEST_SUBMITTED', '', 'GAME_PLAYER_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: `game/${gameId}/player`,
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'GAME_PLAYER_RESPONSE_RECEIVED',
+          response: normalize(data, [schema.playerSchema]),
+          gameId
+        })
+      },
+      method: 'get'
+    }]
+  });
+}
+
+export const requestGameCollectableItems = (gameId) => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['GAME_COLLECTABLE_ITEMS_REQUEST_SUBMITTED', '', 'GAME_COLLECTABLE_ITEMS_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: `game/${gameId}/collectableitems`,
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'GAME_COLLECTABLE_ITEMS_RESPONSE_RECEIVED',
+          response: normalize(data, [schema.collectableItemSchema]),
+          gameId
+        })
+      },
+      method: 'get'
+    }]
+  });
+}
+
+export const requestOrientations = () => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['ORIENTATION_REQUEST_SUBMITTED', '', 'ORIENTATION_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: `orientation`,
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'ORIENTATION_RESPONSE_RECEIVED',
+          response: normalize(data, [schema.orientationSchema])
+        })
+      },
+      method: 'get'
+    }]
+  });
 }

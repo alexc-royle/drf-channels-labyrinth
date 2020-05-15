@@ -87,4 +87,4 @@ class Player(models.Model):
         return self.game_piece.collectable_item == next_item
 
     def completed(self):
-        return (self.completed_time != None or self.game.status == models.Game.COMPLETED)
+        return (self.completed_time != None or self.game.status == self.game.COMPLETED)

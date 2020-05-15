@@ -8,11 +8,12 @@ from rest_framework.response import Response
 from . import serializers
 from . import models
 from . import logic
+from . import pagination
 
 class GameViewSet(viewsets.ModelViewSet):
     queryset = models.Game.objects.all()
     serializer_class = serializers.GameSerializer
-
+    pagination_class = pagination.CustomResultsSetPagination
 
     @detail_route(methods=['get', 'post', 'delete'])
     def player(self, request, pk=None):
@@ -113,7 +114,7 @@ class GameViewSet(viewsets.ModelViewSet):
         helper = logic.MoveCounter(request, pk, player)
         helper.process()
         serializer = serializers.PlayerSerializer(player, many=False)
-        return Response(serializer.data)
+        return Response({ 'data': serializer.data })
 
 
     def get_game_or_error(self, pk, status=None, is_equal=True):
@@ -138,3 +139,11 @@ class GameViewSet(viewsets.ModelViewSet):
         if not player:
             raise ValidationError({ 'detail': 'not a player of the given game' })
         return player
+
+class ShapeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.GamePieceShape.objects.all()
+    serializer_class = serializers.GamePieceShapeSerializer
+
+class OrientationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.GamePieceOrientation.objects.all()
+    serializer_class = serializers.GamePieceOrientationSerializer

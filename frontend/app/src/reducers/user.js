@@ -16,7 +16,6 @@ const loggedIn = (state = false, action) => {
 }
 
 const id = (state='', action) => {
-  console.log(action.type);
   switch(action.type) {
     case "LOGIN_RESPONSE_SUCCESS_RECEIVED":
       console.log('here');

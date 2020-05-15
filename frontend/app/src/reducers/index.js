@@ -2,11 +2,19 @@ import { combineReducers } from 'redux';
 import login, * as fromLogin from './login';
 import registration, * as fromRegistration from './register';
 import user, * as fromUser from './user';
+import games, * as fromGames from './games';
+import gamePieces, * as fromGamePieces from './gamePieces';
+import gamesPagination, * as fromGamesPagination from './gamesPagination';
+import players, * as fromPlayers from './players';
 
 const app = combineReducers({
   login,
   registration,
-  user
+  user,
+  games,
+  gamesPagination,
+  gamePieces,
+  players
 });
 export default app;
 
@@ -27,6 +35,19 @@ export const getRegistrationUsernameErrors = (state) => fromRegistration.getUser
 export const getRegistrationEmailErrors = (state) => fromRegistration.getEmailErrors(state.registration);
 export const getRegistrationPasswordErrors = (state) => fromRegistration.getPasswordErrors(state.registration);
 export const getIsRegistrationSuccessful = (state) => fromRegistration.getIsSuccessful(state.registration);
+
+export const getAllGames = (state) => fromGames.getAllGames(state.games);
+export const getGame = (state, gameId) => fromGames.getGame(state.games, gameId);
+export const getCurrentPagination = (state) => fromGamesPagination.getCurrentPagination(state.gamesPagination);
+
+export const getAllGamePieces = (state) => fromGamePieces.getAllGamePieces(state.gamePieces);
+export const getGamePiece = (state, gamePieceId) => fromGamePieces.getGamePiece(state.gamePieces, gamePieceId);
+export const getGamePiecesByGame = (state, gameId) => fromGamePieces.getGamePiecesByGame(state.gamePieces, gameId);
+
+export const getAllPlayers = (state) => fromPlayers.getAllPlayers(state.players);
+export const getPlayer = (state, playerId) => fromPlayers.getPlayer(state.players, playerId);
+export const getPlayersByGame = (state, gameId) => fromPlayers.getPlayersByGame(state.players, gameId);
+export const getPlayersByGameAndPiece = (state, gameId, pieceId) => fromPlayers.getPlayersByGameAndPiece(state.players, gameId, pieceId);
 
 export const helpers = {
   getIsUserAuthenticated,

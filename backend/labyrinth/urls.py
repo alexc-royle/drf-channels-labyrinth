@@ -22,6 +22,8 @@ from game import views
 
 router = routers.SimpleRouter()
 router.register(r'game', views.GameViewSet)
+router.register(r'shape', views.ShapeViewSet)
+router.register(r'orientation', views.OrientationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

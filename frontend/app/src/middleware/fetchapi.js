@@ -56,7 +56,14 @@ export const lib = {
       .then(lib.checkStatus)
       .then((data) => {
         if (onSuccess) {
-          dispatch({ type: onSuccess, payload: data });
+          switch(typeof onSuccess) {
+            case 'function':
+              onSuccess(data);
+              break;
+            default:
+              dispatch({ type: onSuccess, payload: data });
+              break;
+          }
         }
         return data;
       })
