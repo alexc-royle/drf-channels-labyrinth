@@ -1,4 +1,4 @@
-Django>=2.1,<2.2
+Django>=2.2.8,<3
 psycopg2
 channels
 channels_redis
@@ -7,3 +7,5 @@ watchdog
 django-silk
 coverage
 model_mommy
+pyyaml
+argh

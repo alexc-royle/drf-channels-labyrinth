@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
@@ -15,7 +15,7 @@ class GameViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.GameSerializer
     pagination_class = pagination.CustomResultsSetPagination
 
-    @detail_route(methods=['get', 'post', 'delete'])
+    @action(detail=True, methods=['get', 'post', 'delete'])
     def player(self, request, pk=None):
         if request.method == 'DELETE':
             return self.player_delete(request, pk)
@@ -51,7 +51,7 @@ class GameViewSet(viewsets.ModelViewSet):
         serializer = serializers.PlayerSerializer(players, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def start(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.LOBBY)
         player = self.get_request_user_is_game_player_or_400(request, game)
@@ -63,21 +63,21 @@ class GameViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         raise ValidationError({ 'detail': 'no players'})
 
-    @detail_route(methods=['get'])
+    @action(detail=True, methods=['get'])
     def pieces(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.LOBBY, False)
         pieces = models.GamePiece.objects.filter(game_id=pk).order_by('order')
         serializer = serializers.GamePieceSerializer(pieces, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def rotatesparesquare(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         self.get_request_user_is_current_player_or_400(request, game)
         helper = logic.RotateSpareSquare(pk)
         return helper.process()
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def insertsparesquare(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         current_player = self.get_request_user_is_current_player_or_400(request, game)
@@ -90,14 +90,14 @@ class GameViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-    @detail_route(methods=['get'])
+    @action(detail=True, methods=['get'])
     def collectableitems(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         items = models.CollectableItem.objects.filter(gamepiece__game_id = pk)
         serializer = serializers.CollectableItemSerializer(items, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def finishturn(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         current_player = self.get_request_user_is_current_player_or_400(request, game)
@@ -107,7 +107,7 @@ class GameViewSet(viewsets.ModelViewSet):
         serializer = serializers.PlayerSerializer(players, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def movecounter(self, request, pk=None):
         game = self.get_game_or_error(pk, models.Game.INPROGRESS)
         player = self.get_request_user_is_current_player_or_400(request, game)
