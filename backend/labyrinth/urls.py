@@ -24,6 +24,7 @@ router = routers.SimpleRouter()
 router.register(r'game', views.GameViewSet)
 router.register(r'shape', views.ShapeViewSet)
 router.register(r'orientation', views.OrientationViewSet)
+router.register(r'collectableitem', views.CollectableItemViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

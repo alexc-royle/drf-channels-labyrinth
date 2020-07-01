@@ -226,3 +226,48 @@ export const requestOrientations = () => (dispatch, getState) => {
     }]
   });
 }
+
+export const requestShapes = () => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['SHAPE_REQUEST_SUBMITTED', '', 'SHAPE_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: `shape`,
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'SHAPE_RESPONSE_RECEIVED',
+          response: normalize(data, [schema.shapeSchema])
+        })
+      },
+      method: 'get'
+    }]
+  });
+}
+
+export const createGame = (tempGameId) => (dispatch, getState) => {
+  const state = getState();
+  const userToken = helpers.getUserToken(state);
+  dispatch({
+    type: 'CREATE_GAME_REQUEST_SUBMITTED',
+    tempGameId
+  })
+  dispatch({
+    type: 'API_REQUEST',
+    types: ['', '', 'CREATE_GAME_RESPONSE_ERROR_RECEIVED'],
+    requests: [{
+      url: 'game/',
+      userToken,
+      onSuccess: (data) => {
+        dispatch({
+          type: 'CREATE_GAME_RESPONSE_RECEIVED',
+          response: normalize(data, schema.gameSchema),
+          tempGameId
+        })
+      },
+      method: 'post'
+    }]
+  });
+}

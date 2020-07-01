@@ -12,6 +12,7 @@ const games = (state = {}, action) => {
       }
     case "GAMES_LIST_RESPONSE_RECEIVED":
     case "GAME_RESPONSE_RECEIVED":
+    case "CREATE_GAME_RESPONSE_RECEIVED":
       return {
         ...state,
         ...action.response.entities.game

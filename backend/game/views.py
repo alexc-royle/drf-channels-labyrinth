@@ -143,7 +143,13 @@ class GameViewSet(viewsets.ModelViewSet):
 class ShapeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.GamePieceShape.objects.all()
     serializer_class = serializers.GamePieceShapeSerializer
+    pagination_class = None
 
 class OrientationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.GamePieceOrientation.objects.all()
     serializer_class = serializers.GamePieceOrientationSerializer
+    pagination_class = None
+
+class CollectableItemViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.CollectableItem.objects.all()
+    serializer_class = serializers.CollectableItemSerializer

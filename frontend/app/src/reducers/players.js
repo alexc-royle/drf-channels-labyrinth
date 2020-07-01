@@ -36,5 +36,4 @@ export const getPlayersByGameAndPiece = (state, gameId, pieceId) => {
     }
     return acc;
   }, []);
-
 }

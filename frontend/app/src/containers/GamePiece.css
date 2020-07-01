@@ -1,0 +1,234 @@
+.board {
+  padding: 1%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #bbb;
+}
+
+.gamePiece {
+  width: 14.2857%;
+  padding-top: 14.2857%;
+  position: relative;
+}
+
+.gamePiece .outerWrapper {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  right: 2%;
+  bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: grey;
+  border-radius: 10px;
+}
+
+.gamePiece .outerWrapper .row {
+  flex-basis: 20%;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+}
+
+.row.middle {
+  flex-grow: 3;
+}
+
+.column {
+  background-color: brown;
+  flex-basis: 20%;
+}
+
+.column.centre {
+  flex-grow: 3;
+  position: relative;
+}
+
+.row.middle .column.centre,
+.up .row.top .column.centre,
+.down .row.bottom .column.centre,
+.left .row.middle .column.left,
+.right .row.middle .column.right {
+  background-color: grey;
+}
+
+.up.left .row.top .column.left {
+  border-radius: 10px 0 10px 0;
+}
+.up.right .row.top .column.right {
+  border-radius: 0 10px 0 10px;
+}
+
+.down.left .row.bottom .column.left {
+  border-radius: 0 10px 0 10px;
+}
+.down.right .row.bottom .column.right {
+  border-radius: 10px 0 10px 0;
+}
+
+.row.top .column.left {
+  border-radius: 10px 0 0 0;
+}
+
+.row.top .column.right {
+  border-radius: 0 10px 0 0;
+}
+
+.row.bottom .column.left {
+  border-radius: 0 0 0 10px;
+}
+
+.row.bottom .column.right {
+  border-radius: 0 0 10px 0;
+}
+
+.corner-filler {
+  position: absolute;
+  width: 33.33%;
+  height: 33.33%;
+  background-color: brown;
+  display: none;
+}
+
+.corner-filler:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+  content: '';
+}
+
+.bend .corner-filler {
+  display: block;
+}
+
+.bend.up.right .corner-filler {
+  bottom: 0;
+}
+.bend.up.right .corner-filler:after {
+  border-radius: 0 0 0 10px;
+}
+
+.bend.up.left .corner-filler {
+  bottom: 0;
+  right: 0;
+}
+.bend.up.left .corner-filler:after {
+  border-radius: 0 0 10px 0;
+}
+
+.bend.down.right .corner-filler:after {
+  border-radius: 10px 0 0 0;
+}
+
+.bend.down.left .corner-filler {
+  right: 0;
+}
+.bend.down.left .corner-filler:after {
+  border-radius: 0 10px 0 0;
+}
+
+.collectableHolder {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.alligator .collectableHolder {
+	background-image: url(../images/icons8-Alligator.png);
+}
+.ant .collectableHolder {
+	background-image: url(../images/icons8-Ant.png);
+}
+.bear .collectableHolder {
+	background-image: url(../images/icons8-Bear.png);
+}
+.bug .collectableHolder {
+	background-image: url(../images/icons8-Bug.png);
+}
+.bull .collectableHolder {
+	background-image: url(../images/icons8-Bull.png);
+}
+.coins .collectableHolder {
+	background-image: url(../images/icons8-Coins.png);
+}
+.diamond .collectableHolder {
+	background-image: url(../images/icons8-Diamond.png);
+}
+.ring .collectableHolder {
+	background-image: url(../images/icons8-DiamondRing.png);
+}
+.dinosaur .collectableHolder {
+	background-image: url(../images/icons8-Dinosaur.png);
+}
+.dragon .collectableHolder {
+	background-image: url(../images/icons8-Dragon.png);
+}
+.emerald .collectableHolder {
+	background-image: url(../images/icons8-Emerald.png);
+}
+.crown .collectableHolder {
+	background-image: url(../images/icons8-Fairytale.png);
+}
+.falcon .collectableHolder {
+	background-image: url(../images/icons8-Falcon.png);
+}
+.genie .collectableHolder {
+	background-image: url(../images/icons8-Genie.png);
+}
+.ghost .collectableHolder {
+	background-image: url(../images/icons8-Ghost.png);
+}
+.leprechaun .collectableHolder {
+	background-image: url(../images/icons8-Leprechaun.png);
+}
+.money-bag .collectableHolder {
+	background-image: url(../images/icons8-MoneyBag.png);
+}
+.rat .collectableHolder {
+	background-image: url(../images/icons8-Rat.png);
+}
+.ruby .collectableHolder {
+	background-image: url(../images/icons8-Ruby.png);
+}
+.skull .collectableHolder {
+	background-image: url(../images/icons8-Skull.png);
+}
+.snake .collectableHolder {
+	background-image: url(../images/icons8-Snake.png);
+}
+.helmet .collectableHolder {
+	background-image: url(../images/icons8-SpartanHelmet.png);
+}
+.spider .collectableHolder {
+	background-image: url(../images/icons8-Spider.png);
+}
+.sword .collectableHolder {
+	background-image: url(../images/icons8-Sword.png);
+}
+.topaz .collectableHolder {
+	background-image: url(../images/icons8-Topaz.png);
+}
+.chest .collectableHolder {
+	background-image: url(../images/icons8-TreasureChest.png);
+}
+.map .collectableHolder {
+	background-image: url(../images/icons8-TreasureMap.png);
+}
+.unicorn .collectableHolder {
+	background-image: url(../images/icons8-Unicorn.png);
+}
+.wasp .collectableHolder {
+	background-image: url(../images/icons8-Wasp.png);
+}
+.witch .collectableHolder {
+	background-image: url(../images/icons8-Witch.png);
+}
+.wolf .collectableHolder {
+	background-image: url(../images/icons8-Wolf.png);
+}
